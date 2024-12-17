@@ -1,7 +1,134 @@
-// import React from "react";
+// import React from 'react'
+
+import { useState } from "react";
+import getMails from "../../api/mailbox/getMails";
+import { LoaderPinwheelIcon } from "lucide-react";
+import DateFormatter from "../FormatDate";
+import MailBoxModel from "./MailBoxModel";
 
 function ContactForm() {
-  return <div>ContactForm</div>;
+  const [mails, setMails] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const [data, setData] = useState([]);
+
+  console.log(show);
+  const getMailsData = async () => {
+    setLoading(true);
+    try {
+      const response = await getMails();
+      console.log(response.data);
+      setMails(response.data.mailbox);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  //   console.log(mails);
+  useState(() => {
+    getMailsData();
+  }, [mails]);
+
+  return (
+    <div className="bg-white p-4 rounded-lg">
+      <div>
+        <span className="banner-header">Contact Form</span>
+        <span className="font-semibold text-[16px] ms-5 text-gray-400">10</span>
+      </div>
+      <div className="w-full mt-5 h-[347px] overflow-y-auto rounded-lg">
+        {loading && (
+          <div className="flex flex-col justify-center items-center h-full">
+            <LoaderPinwheelIcon
+              size={30}
+              className="animate-spin text-gray-400"
+            />
+            <span className="text-gray-400 mt-2">Loading...</span>
+          </div>
+        )}
+
+        {show && (
+          <div className="absolute w-full h-screen backdrop-opacity-10 backdrop-invert bg-white/30 top-0 left-0 flex justify-center items-center">
+            <MailBoxModel
+              data={data}
+              onClose={() => {
+                setShow(false);
+              }}
+            />
+          </div>
+        )}
+        {/* {mails.length === 0 && (
+          <div className="flex justify-center items-center h-full">
+            <span className="text-gray-400">No Data Found</span>
+          </div>
+        )} */}
+
+        {mails.length !== 0 && (
+          <table className="w-full">
+            <thead className="text-left">
+              <tr className="bg-primary text-white text-left ">
+                <th className="py-4 px-4 font-medium">
+                  <input type="checkbox" className="mr-2" />
+                </th>
+                <th className="py-4 px-4 font-medium">No</th>
+                <th className="py-4 px-4 font-medium">Date</th>
+                <th className="py-4 px-4 font-medium">Name</th>
+                <th className="py-4 px-4 font-medium">Subject</th>
+                <th className="py-4 px-4 font-medium">Description</th>
+                <th className="py-4 px-4 font-medium">Phone Num</th>
+                <th className="py-4 px-4 font-medium">Email</th>
+
+                {/* <th>Local Ping (MS)</th> */}
+              </tr>
+            </thead>
+            <tbody className="">
+              <tr className="bg-white ">
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
+              </tr>
+
+              {mails.length !== 0 &&
+                mails.map((mail, index) => (
+                  <tr
+                    className="bg-white "
+                    key={index}
+                    onClick={() => {
+                      setShow(true);
+                      setData(mail);
+                    }}
+                  >
+                    <td className="py-2 px-4">
+                      <input
+                        type="checkbox"
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </td>
+                    <td className="py-2 px-4">{index + 1}</td>
+                    <td className="py-2 px-4">
+                      <DateFormatter dateString={mail.sentAt} />
+                    </td>
+                    <td className="py-2 px-4">{mail.name}</td>
+                    <td className="py-2 px-4">{mail.subject}</td>
+                    <td className="py-2 px-4 w-48 overflow-hidden whitespace-nowrap text-ellipsis">
+                      {mail.description}
+                    </td>
+                    <td className="py-2 px-4">{mail.phone}</td>
+                    <td className="py-2 px-4">{mail.email}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default ContactForm;

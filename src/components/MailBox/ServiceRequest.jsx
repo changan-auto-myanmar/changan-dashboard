@@ -1,8 +1,8 @@
 // import React from 'react'
 
 import { useState } from "react";
-import getMails from "../../api/mailbox/getMails";
 import { LoaderPinwheelIcon } from "lucide-react";
+import getServices from "../../api/mailbox/getService";
 
 function ServiceRequest() {
   const [mails, setMails] = useState([]);
@@ -10,7 +10,7 @@ function ServiceRequest() {
   const getMailsData = async () => {
     setLoading(true);
     try {
-      const response = await getMails();
+      const response = await getServices();
       console.log(response.data);
       setMails(response.data.mailbox);
       setLoading(false);
