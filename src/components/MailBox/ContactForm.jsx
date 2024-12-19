@@ -35,7 +35,11 @@ function ContactForm() {
     <div className="bg-white p-4 rounded-lg">
       <div>
         <span className="banner-header">Contact Form</span>
-        <span className="font-semibold text-[16px] ms-5 text-gray-400">10</span>
+        {!loading && (
+          <span className="font-semibold text-[16px] ms-5 text-gray-400">
+            {mails.length}
+          </span>
+        )}
       </div>
       <div className="w-full mt-5 h-[347px] overflow-y-auto rounded-lg">
         {loading && (
@@ -58,11 +62,11 @@ function ContactForm() {
             />
           </div>
         )}
-        {/* {mails.length === 0 && (
+        {!loading && mails.length === 0 && (
           <div className="flex justify-center items-center h-full">
             <span className="text-gray-400">No Data Found</span>
           </div>
-        )} */}
+        )}
 
         {mails.length !== 0 && (
           <table className="w-full">

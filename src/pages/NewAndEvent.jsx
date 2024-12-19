@@ -43,8 +43,8 @@ const NewAndEvent = () => {
           </div>
 
           <Link
-            to="/new/form"
-            className="flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95"
+            to="/home/new/form"
+            className="flex items-center bg-primary text-white px-4 py-3 rounded-lg active:scale-95"
           >
             <MdDriveFolderUpload className="mr-2" size={20} />
             <span className="tabs-btn">Upload Content</span>

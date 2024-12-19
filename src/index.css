@@ -25,7 +25,7 @@ body {
   border: 1px solid #0074e8;
   color: #0074e8;
   padding: 10px 10px;
-  border-radius: 2px;
+  border-radius: 5px;
   font-size: 12px;
 
   display: flex;
@@ -37,7 +37,7 @@ body {
   border: 1px solid #ff0000;
   color: #ff0000;
   padding: 10px 10px;
-  border-radius: 2px;
+  border-radius: 5px;
   font-size: 12px;
 
   display: flex;
@@ -49,12 +49,18 @@ body {
   background-color: #0074e8;
   color: white;
   padding: 10px 10px;
-  border-radius: 2px;
+  border-radius: 5px;
   font-size: 12px;
 
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.cancel:hover,
+.upload:hover,
+.delete:hover {
+  scale: 0.98;
 }
 
 .cancel:active,

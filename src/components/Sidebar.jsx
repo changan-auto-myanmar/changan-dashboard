@@ -17,7 +17,7 @@ const Sidebar = () => {
           <ul className="space-y-2">
             <li>
               <NavLink
-                to="/"
+                to="/home/image-vedio"
                 className={({ isActive }) =>
                   `block flex px-2 py-3 rounded ${
                     isActive
@@ -32,7 +32,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                to="/car-detail"
+                to="/home/car-detail"
                 className={({ isActive }) =>
                   `block flex px-2 py-3 rounded ${
                     isActive
@@ -47,7 +47,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                to="/mail"
+                to="/home/mail"
                 className={({ isActive }) =>
                   `block flex px-2 py-3 rounded ${
                     isActive
@@ -62,7 +62,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                to="/new"
+                to="/home/new"
                 className={({ isActive }) =>
                   `block flex px-2 py-3 rounded ${
                     isActive

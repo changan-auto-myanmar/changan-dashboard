@@ -15,7 +15,7 @@ function Changan({ data }) {
           <div className="grid grid-cols-2 gap-10 my-5">
             {data.map((image, index) => (
               <div
-                className="w-full h-auto  rounded-lg overflow-hidden images p-2 bg-gray-200"
+                className="w-full h-auto rounded-lg overflow-hidden cursor-pointer p-2 bg-gray-200"
                 key={index}
               >
                 <div className="relative">

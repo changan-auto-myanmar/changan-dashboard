@@ -45,7 +45,7 @@ const CarDetail = () => {
           </div>
 
           <Link
-            to="/car-detail/form"
+            to="/home/car-detail/form"
             className="flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95"
           >
             <MdDriveFolderUpload className="mr-2" size={20} />

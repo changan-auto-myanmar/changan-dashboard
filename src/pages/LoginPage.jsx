@@ -19,7 +19,7 @@ const Login = () => {
     console.log(res);
     if (res) {
       setTimeout(() => {
-        navigate("/dashboard/home");
+        navigate("/home/image-vedio");
       }, 1000);
     }
   };

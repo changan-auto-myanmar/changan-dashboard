@@ -1,5 +1,5 @@
 // import React from "react";
-import { Trash2Icon } from "lucide-react";
+// import { Trash2Icon } from "lucide-react";
 import { useState } from "react";
 import ServiceRequest from "../components/MailBox/ServiceRequest";
 import ContactForm from "../components/MailBox/ContactForm";
@@ -29,12 +29,12 @@ function MailBox() {
             ))}
           </div>
 
-          <div>
+          {/* <div>
             <button className="cancel bg-white">
               <Trash2Icon size={15} className="mr-2" />
               <span className="font-semibold"> Delete</span>
             </button>
-          </div>
+          </div> */}
         </div>
 
         <div>{activeTab === tabs[0] && <ServiceRequest />}</div>
