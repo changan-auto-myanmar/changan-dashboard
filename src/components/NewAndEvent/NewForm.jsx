@@ -2,34 +2,41 @@
 import { useRef, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { MdDriveFolderUpload } from "react-icons/md";
+import { MdDriveFolderUpload, MdOutlineDeleteOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import constentUpload from "../../api/new/contentUpload";
 const brands = ["News", "Events", "Promotions"];
 
 function NewForm() {
   const navigate = useNavigate();
-  const [exterier, setExterier] = useState(null);
+  const [exterier, setExterier] = useState([]);
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const desc = useRef();
   const [date, setDate] = useState("");
   const handleImageChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setExterier(selectedFile);
+    const files = Array.from(event.target.files);
+    setExterier((prevImages) => [...prevImages, ...files]);
+  };
+
+  const removePhoto = (index) => {
+    const newImages = [...exterier];
+    newImages.splice(index, 1);
+    setExterier(newImages);
   };
 
   const uploadContent = async () => {
-    const data = {
-      image: exterier,
-      category: category,
-      title: title,
-      body: desc.current.value,
-      eventDate: date,
-      sub_title: "intro",
-    };
-    console.log("data", data);
-    const res = await constentUpload(data);
+    const formData = new FormData();
+    formData.append("category", category);
+    formData.append("title", title);
+    formData.append("body", desc.current.value);
+    formData.append("eventDate", date);
+    exterier.forEach((image) => {
+      formData.append("images", image);
+    });
+
+    console.log("data", formData);
+    const res = await constentUpload(formData);
     if (res.code === 200) {
       navigate("/home/new");
     }
@@ -54,7 +61,7 @@ function NewForm() {
                 {brands.map((brand) => (
                   <div key={brand} className="flex items-center space-x-2">
                     <input
-                      type="checkbox"
+                      type="radio"
                       className="checkbox"
                       onClick={() => setCategory(brand)}
                     />
@@ -136,6 +143,7 @@ function NewForm() {
                     <input
                       id="file-upload"
                       type="file"
+                      multiple
                       accept="image/*"
                       onChange={handleImageChange}
                       className="hidden"
@@ -144,14 +152,29 @@ function NewForm() {
                 </div>
               </div>
 
-              <div className="w-[230px] h-[230px]">
-                {exterier ? (
-                  <img
-                    src={URL.createObjectURL(exterier)}
-                    alt="exterier"
-                    className="w-full h-full object-cover rounded-md"
-                  />
-                ) : (
+              <div className="">
+                {exterier.length > 0 && (
+                  <div className="flex flex-wrap gap-4 mt-4">
+                    {exterier.map((image, index) => (
+                      <div key={index} className="w-[230px] h-[230px] relative">
+                        <img
+                          src={URL.createObjectURL(image)}
+                          alt={`Exterier ${index + 1}`}
+                          className="w-full h-full object-cover rounded-md"
+                        />
+                        <button
+                          className="absolute top-0 right-0 bg-danger text-white m-2 p-2 rounded-sm shadow-lg"
+                          onClick={() => {
+                            removePhoto(index);
+                          }}
+                        >
+                          <MdOutlineDeleteOutline size={20} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {exterier.length === 0 && (
                   <p className="text-sm text-gray-600 mt-5">
                     Please upload image with file size less than 10MB.
                   </p>

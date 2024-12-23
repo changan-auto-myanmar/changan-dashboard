@@ -1,25 +1,54 @@
 // HomePage.js
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "swiper/css";
-import { MdDriveFolderUpload } from "react-icons/md";
+import { MdDriveFolderUpload, MdOutlineEdit } from "react-icons/md";
 
 import { Link } from "react-router-dom";
+import getAllNew from "../api/new/getAllNew";
+import Loading from "../components/Loading";
+import { Trash2Icon } from "lucide-react";
+import deleteNew from "../api/new/deketeNew";
 // import "swiper/swiper-bundle.min.css"; // Import Swiper styles
 
-const tabs = ["All", "News", "Event", "Promotions"];
+const tabs = ["All", "News", "Events", "Promotions"];
 
 // Sample dummy image URLs
-const sampleImages = [
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-];
 
 const NewAndEvent = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filterNew, setFilterNew] = useState([]);
+
+  const fetchNews = async () => {
+    const res = await getAllNew();
+    if (res.code === 200) {
+      setLoading(false);
+    }
+    // console.log(res);
+    setNews(res.data.CSR);
+    setFilterNew(res.data.CSR);
+  };
+
+  const deleteNewEvent = async (id) => {
+    const res = await deleteNew(id);
+    console.log(res);
+    if (res.code === 200) {
+      fetchNews();
+    }
+  };
+
+  const filterCategory = (category) => {
+    if (category === "All") {
+      setFilterNew(news);
+      return;
+    }
+    return setFilterNew(news.filter((item) => item.category === category));
+  };
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
 
   return (
     <div className="mt-5">
@@ -35,7 +64,10 @@ const NewAndEvent = () => {
                 className={`py-1 px-4 rounded-2xl text-[14px] font-semibold ${
                   activeTab === tab ? "bg-secondary text-primary" : "text-black"
                 }`}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => {
+                  setActiveTab(tab);
+                  filterCategory(tab);
+                }}
               >
                 {tab}
               </button>
@@ -51,9 +83,60 @@ const NewAndEvent = () => {
           </Link>
         </div>
 
-        {/* <div>{activeTab === tabs[0] && <Changan data={sampleImages} />}</div>
-        <div>{activeTab === tabs[1] && <Deepin />}</div>
-        <div>{activeTab === tabs[2] && <Kaichen />}</div> */}
+        <div className="p-4 bg-white rounded-lg">
+          <div className="flex items-center">
+            <p className="banner-header">New</p>
+          </div>
+          <div>
+            {loading && (
+              <div className="flex justify-center items-center h-[360px]">
+                <Loading />
+              </div>
+            )}
+
+            <div className="overflow-y-auto mt-2 h-[360px]">
+              <div className="grid grid-cols-2 gap-10 my-5">
+                {filterNew.map((newdata, index) => (
+                  <div
+                    className="w-full h-auto rounded-lg overflow-hidden cursor-pointer p-2 bg-gray-200 "
+                    key={index}
+                  >
+                    <div className="relative">
+                      <div className="absolute top-0 right-0 p-2 z-10">
+                        <div className="flex items-center space-x-2">
+                          <button
+                            // onClick={() => {
+                            //   setModalOpen(true);
+                            //   setSelectedImage(index);
+                            // }}
+                            className="py-3 px-3 rounded-2xl text-[14px] bg-secondary text-primary flex items-center font-semibold rounded-md hover:scale-105 active:scale-95"
+                          >
+                            <MdOutlineEdit className="mr-2" size={20} />
+                            <span className="tabs-btn">Edit</span>
+                          </button>
+                          <button
+                            onClick={() => deleteNewEvent(newdata._id)}
+                            className="py-3 px-3 rounded-2xl text-[14px] bg-red-200 text-red-500 flex items-center font-semibold rounded-md hover:scale-105 active:scale-95"
+                          >
+                            <Trash2Icon className="" size={20} />
+                          </button>
+                        </div>
+                      </div>
+                      <img
+                        src={newdata.images[0]}
+                        alt="img"
+                        className="w-full h-72 object-cover"
+                      />
+                    </div>
+                    <p className="text-[16px] font-semibold py-2">
+                      {newdata.title}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ module.exports = {
         secondary: "#B0D7FF", // Custom secondary color
         accent: "#FBBF24", // Custom accent color
         active: "#00FF00",
-        expired: "#FF0000",
+        danger: "#FF0000",
         pending: "#FFFF00",
         // Add more custom colors as needed
       },
