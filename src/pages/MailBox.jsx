@@ -28,13 +28,6 @@ function MailBox() {
               </button>
             ))}
           </div>
-
-          {/* <div>
-            <button className="cancel bg-white">
-              <Trash2Icon size={15} className="mr-2" />
-              <span className="font-semibold"> Delete</span>
-            </button>
-          </div> */}
         </div>
 
         <div>{activeTab === tabs[0] && <ServiceRequest />}</div>

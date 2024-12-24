@@ -1,54 +1,96 @@
 // import React from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdDriveFolderUpload, MdOutlineDeleteOutline } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
-import constentUpload from "../../api/new/contentUpload";
-
+import { Link, useNavigate, useParams } from "react-router-dom";
+import getANew from "../../api/new/getANew";
+import deleteImage from "../../api/new/deleteImage";
+import editUploadContent from "../../api/new/editUploadContent";
+import editUploadImage from "../../api/new/editUploadImage";
+import { format } from "date-fns";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Import the CSS file
+import { CalendarIcon } from "lucide-react";
 const brands = ["News", "Events", "Promotions"];
 
-function NewForm() {
+function NewDetail() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [exterier, setExterier] = useState([]);
+  const [images, setImages] = useState([]);
   const [category, setCategory] = useState("Events");
   const [title, setTitle] = useState("");
   const desc = useRef();
   const [date, setDate] = useState("");
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
-    setExterier((prevImages) => [...prevImages, ...files]);
+    setImages((prevImages) => [...prevImages, ...files]);
   };
 
   const removePhoto = (index) => {
     const newImages = [...exterier];
     newImages.splice(index, 1);
-    setExterier(newImages);
+    setImages(newImages);
   };
 
   const uploadContent = async () => {
-    const formData = new FormData();
-    formData.append("category", category);
-    formData.append("title", title);
-    formData.append("body", desc.current.value);
-    category !== "News" && formData.append("eventDate", date);
-    exterier.forEach((image) => {
-      formData.append("images", image);
-    });
+    const data = {
+      category,
+      title,
+      body: desc.current.value,
+      ...(category !== "News" && { eventDate: date }),
+    };
+    if (images.length !== 0) {
+      const formData = new FormData();
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
 
-    console.log("data", formData);
-    const res = await constentUpload(formData);
-    if (res.code === 200) {
+      const imgdata = {
+        id,
+        data: formData,
+      };
+      await editUploadImage(imgdata);
+    }
+
+    const res = await editUploadContent({ id, data });
+    // console.log("res", res);
+    if (res.status === "success") {
+      console.log("work");
       navigate("/home/new");
     }
-    console.log("res", res);
   };
+
+  const getanew = async () => {
+    const res = await getANew(id);
+    console.log("res", res[0].eventDate);
+    setTitle(res[0].title);
+    setCategory(res[0].category);
+    setDate(res[0].eventDate);
+    desc.current.value = res[0].body;
+    setExterier(res[0].images);
+  };
+
+  const deleteimage = async (imageId) => {
+    const data = {
+      id,
+      imageId,
+    };
+    const res = await deleteImage(data);
+    res.code === 200 &&
+      setExterier((prev) => prev.filter((item) => item._id !== imageId));
+  };
+
+  useEffect(() => {
+    getanew();
+  }, []);
   return (
     <div>
       <div className="mt-1">
         <Link to="/home/new" className="flex items-center space-x-2">
           <BiArrowBack size={40} className="font-bold" />
-          <span className="header my-4">Upload Content</span>
+          <span className="header my-4">Detail Content</span>
         </Link>
       </div>
 
@@ -95,6 +137,7 @@ function NewForm() {
               <input
                 onChange={(e) => setTitle(e.target.value)}
                 type="text"
+                value={title ? title : ""}
                 className="bg-gray-100 rounded-md px-6 py-4"
                 placeholder="Enter Content Title"
               />
@@ -103,11 +146,31 @@ function NewForm() {
             {category !== "News" && (
               <div className="flex flex-col space-y-2 w-1/2">
                 <label className="banner-header">Event Date</label>
-                <input
-                  type="date"
-                  onChange={(e) => setDate(e.target.value)}
-                  className="bg-gray-100 rounded-md px-6 py-4"
-                />
+                <div className="relative bg-gray-100 rounded-md px-6 py-4 w-full pr-10">
+                  <DatePicker
+                    selected={date} // Use the date from state for selection
+                    onChange={(date) => setDate(date)} // Update state when date is selected
+                    dateFormat="dd/MM/yyyy" // Format the displayed date
+                    className="bg-gray-100 w-full"
+                    placeholderText="Select a date" // Optional: Placeholder text
+                  />
+                  <div className="absolute top-4 right-3 text-gray-400 cursor-pointer">
+                    <CalendarIcon
+                      className="h-5 w-5"
+                      // Clicking icon will trigger the date picker
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent click event from bubbling up
+                        // If you need to trigger focus, this is optional
+                        document
+                          .querySelector(
+                            ".react-datepicker__input-container input"
+                          )
+                          .focus();
+                      }}
+                      aria-hidden="true"
+                    />
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -127,9 +190,9 @@ function NewForm() {
 
         {/* Exterier */}
         <div>
-          <div className="flex items-center">
-            <p className="banner-header mr-2">Exterier</p>
-            <p>2/3</p>
+          <div className="flex items-center mt-5">
+            <p className="banner-header mr-2">Select Image For Content</p>
+            <p>2/8</p>
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">
@@ -156,9 +219,25 @@ function NewForm() {
               </div>
 
               <div className="">
-                {exterier.length > 0 && (
-                  <div className="flex flex-wrap gap-4 mt-4">
-                    {exterier.map((image, index) => (
+                <div className="flex flex-wrap gap-4 mt-4">
+                  {exterier.length > 0 &&
+                    exterier.map((image, index) => (
+                      <div key={index} className="w-[230px] h-[230px] relative">
+                        <img
+                          src={`https://changan-automobile.onrender.com/api/v1/${image.filepath}`}
+                          alt={`Exterier ${index + 1}`}
+                          className="w-full h-full object-cover rounded-md"
+                        />
+                        <button
+                          className="absolute top-0 right-0 bg-danger text-white m-2 p-2 rounded-sm shadow-lg"
+                          onClick={() => deleteimage(image._id)}
+                        >
+                          <MdOutlineDeleteOutline size={20} />
+                        </button>
+                      </div>
+                    ))}
+                  {images.length > 0 &&
+                    images.map((image, index) => (
                       <div key={index} className="w-[230px] h-[230px] relative">
                         <img
                           src={URL.createObjectURL(image)}
@@ -175,8 +254,8 @@ function NewForm() {
                         </button>
                       </div>
                     ))}
-                  </div>
-                )}
+                </div>
+
                 {exterier.length === 0 && (
                   <p className="text-sm text-gray-600 mt-5">
                     Please upload image with file size less than 10MB.
@@ -190,5 +269,4 @@ function NewForm() {
     </div>
   );
 }
-
-export default NewForm;
+export default NewDetail;

@@ -1,39 +1,71 @@
-// import React from 'react'
-
-import { useState } from "react";
-import { LoaderPinwheelIcon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { LoaderPinwheelIcon, Trash2Icon } from "lucide-react";
 import getServices from "../../api/mailbox/getService";
+import DeleteService from "../../api/mailbox/deleteService";
 
 function ServiceRequest() {
   const [mails, setMails] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedMails, setSelectedMails] = useState([]); // For selected mail IDs
+
   const getMailsData = async () => {
     setLoading(true);
     try {
       const response = await getServices();
-      console.log(response.data);
+      // console.log(response.data);
       setMails(response.data.mailbox);
-      setLoading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+    } finally {
       setLoading(false);
     }
   };
 
-  //   console.log(mails);
-  useState(() => {
+  const deleteSelectedMails = async () => {
+    const res = await DeleteService(selectedMails);
+    // console.log(res);
+    if (res.code === 200) {
+      // console.log("Deleted");
+      getMailsData();
+      setSelectedMails([]);
+    }
+  };
+
+  useEffect(() => {
     getMailsData();
-  }, [mails]);
+  }, []);
+
+  const selectAllMails = (event) => {
+    if (event.target.checked) {
+      // Select all mail _IDs
+      const allMailIds = mails.map((mail) => mail._id); // Ensure each mail object has an _id
+      setSelectedMails(allMailIds);
+    } else {
+      // Clear selection
+      setSelectedMails([]);
+    }
+  };
 
   return (
-    <div className="bg-white p-4 rounded-lg">
-      <div>
-        <span className="banner-header">ServiceRequest</span>
-        {!loading && (
-          <span className="font-semibold text-[16px] ms-5 text-gray-400">
-            {mails.length}
-          </span>
-        )}
+    <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-md">
+      <div className="flex justify-between items-center">
+        <div>
+          <span className="banner-header">Service Request</span>
+          {!loading && (
+            <span className="font-semibold text-[16px] ms-5 text-gray-400">
+              {mails.length}
+            </span>
+          )}
+        </div>
+        <div>
+          <button
+            className="flex items-center gap-2 bg-danger p-2 text-white rounded-lg active:scale-95 hover:bg-white hover:text-danger border border-danger"
+            onClick={() => deleteSelectedMails()}
+          >
+            <Trash2Icon />
+            <span className="font-bold">Delete</span>
+          </button>
+        </div>
       </div>
       <div className="w-full mt-5 h-[347px] overflow-y-auto rounded-lg">
         {loading && (
@@ -52,12 +84,19 @@ function ServiceRequest() {
           </div>
         )}
 
-        {mails.length !== 0 && (
+        {mails.length > 0 && (
           <table className="w-full">
             <thead className="text-left">
               <tr className="bg-primary text-white text-left ">
-                <th className="py-4 px-4 font-medium">
-                  <input type="checkbox" className="mr-2" />
+                <th className="py-4 px-4">
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    onChange={selectAllMails}
+                    checked={
+                      mails.length > 0 && selectedMails.length === mails.length
+                    } // Check if all are selected
+                  />
                 </th>
                 <th className="py-4 px-4 font-medium">No</th>
                 <th className="py-4 px-4 font-medium">Date</th>
@@ -65,35 +104,39 @@ function ServiceRequest() {
                 <th className="py-4 px-4 font-medium">Car Model</th>
                 <th className="py-4 px-4 font-medium">Phone Num</th>
                 <th className="py-4 px-4 font-medium">Email</th>
-
-                {/* <th>Local Ping (MS)</th> */}
               </tr>
             </thead>
-            <tbody className="">
-              <tr className="bg-white ">
-                <td className="py-2 px-4"></td>
-                <td className="py-2 px-4"></td>
-                <td className="py-2 px-4"></td>
-                <td className="py-2 px-4"></td>
-                <td className="py-2 px-4"></td>
-                <td className="py-2 px-4"></td>
-                <td className="py-2 px-4"></td>
-              </tr>
-
-              {mails.length !== 0 &&
-                mails.map((mail, index) => (
-                  <tr className="bg-white " key={index}>
-                    <td className="py-2 px-4">
-                      <input type="checkbox" className="mr-2" />
-                    </td>
-                    <td className="py-2 px-4">{index + 1}</td>
-                    <td className="py-2 px-4">{mail.date}</td>
-                    <td className="py-2 px-4">{mail.name}</td>
-                    <td className="py-2 px-4">{mail.car_model}</td>
-                    <td className="py-2 px-4">{mail.phone}</td>
-                    <td className="py-2 px-4">{mail.email}</td>
-                  </tr>
-                ))}
+            <tbody>
+              {mails.map((mail, index) => (
+                <tr className="bg-white" key={mail._id}>
+                  {/* Use _id for the key */}
+                  <td className="py-2 px-4">
+                    <input
+                      type="checkbox"
+                      className="mr-2"
+                      checked={selectedMails.includes(mail._id)} // Check if the mail _ID is selected
+                      onChange={() => {
+                        if (selectedMails.includes(mail._id)) {
+                          // If already selected, remove from the selection
+                          setSelectedMails(
+                            selectedMails.filter((id) => id !== mail._id)
+                          );
+                        } else {
+                          // If not selected, add to selection
+                          setSelectedMails([...selectedMails, mail._id]);
+                        }
+                      }}
+                      onClick={(e) => e.stopPropagation()} // Prevent row click propagation
+                    />
+                  </td>
+                  <td className="py-2 px-4">{index + 1}</td>
+                  <td className="py-2 px-4">{mail.date}</td>
+                  <td className="py-2 px-4">{mail.name}</td>
+                  <td className="py-2 px-4">{mail.car_model}</td>
+                  <td className="py-2 px-4">{mail.phone}</td>
+                  <td className="py-2 px-4">{mail.email}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         )}
