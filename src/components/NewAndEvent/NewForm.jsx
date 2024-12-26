@@ -128,8 +128,8 @@ function NewForm() {
         {/* Exterier */}
         <div>
           <div className="flex items-center">
-            <p className="banner-header mr-2">Exterier</p>
-            <p>2/3</p>
+            <p className="banner-header mr-2">Image</p>
+            {/* <p>2/3</p> */}
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">

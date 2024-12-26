@@ -7,10 +7,16 @@ import CarModelSectoin from "./DetailForm/CarModelSectoin";
 import CarColorSection from "./DetailForm/CarColorSection";
 import CarImageSection from "./DetailForm/CarImageSection";
 
-const tabs = ["Car Model", "Color", "Image"];
+const tabs = ["Car Model", "Image", "Color"];
 
 function DetailForm() {
+  // const childRef = useRef();
   const [activeTab, setActiveTab] = useState(tabs[0]);
+
+  const handleUploadClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <div>
       <div className="mt-1">
@@ -30,7 +36,7 @@ function DetailForm() {
                 className={`py-1 px-4 rounded-2xl text-[14px] font-semibold ${
                   activeTab === tab ? "bg-secondary text-primary" : "text-black"
                 }`}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => handleUploadClick(tab)}
               >
                 {tab}
               </button>
@@ -49,9 +55,11 @@ function DetailForm() {
         </div>
 
         <div className="overflow-y-auto h-[420px]">
-          <div>{activeTab === tabs[0] && <CarModelSectoin />}</div>
-          <div>{activeTab === tabs[1] && <CarColorSection />}</div>
-          <div>{activeTab === tabs[2] && <CarImageSection />}</div>
+          <div>
+            {activeTab === tabs[0] && <CarModelSectoin activeTab={activeTab} />}
+          </div>
+          <div>{activeTab === tabs[1] && <CarImageSection />}</div>
+          <div>{activeTab === tabs[2] && <CarColorSection />}</div>
         </div>
       </div>
     </div>

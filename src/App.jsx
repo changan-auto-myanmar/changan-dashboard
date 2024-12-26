@@ -6,6 +6,8 @@ import "./App.css";
 // Page
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 export default function App() {
   // const token = sessionStorage.getItem("biz-bozz");
@@ -13,11 +15,13 @@ export default function App() {
 
   return (
     <AnimatePresence>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/home/*" element={<HomePage />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/home/*" element={<HomePage />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </Provider>
     </AnimatePresence>
   );
 }
