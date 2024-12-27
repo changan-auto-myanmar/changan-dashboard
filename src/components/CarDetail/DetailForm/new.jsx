@@ -1,14 +1,11 @@
 import { Trash } from "lucide-react";
 import { useState } from "react";
 import { MdAddCircleOutline, MdDriveFolderUpload } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { removeCarData, selectCarData } from "./../../../redux/carSlice";
+import { useSelector } from "react-redux";
+import { selectCarData } from "./../../../redux/carSlice";
 import uploadcarDetail from "../../../api/cardetail/uploadcarDetail";
-import { useNavigate } from "react-router-dom";
 
 function CarColorSection() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [carColorData, setcarColorData] = useState([]);
   const carData = useSelector(selectCarData);
   const [colorName, setColorName] = useState("");
@@ -27,7 +24,7 @@ function CarColorSection() {
     setcarColorImage(null);
   };
 
-  console.log("carColorData", carColorData);
+  // console.log("carColorData", carColorData);
 
   const carDetailUpload = async () => {
     const formData = new FormData();
@@ -41,13 +38,13 @@ function CarColorSection() {
     formData.append("mockup", carData.mockup);
     formData.append("car_banner", carData.car_banner);
     formData.append("car_porche", carData.car_porche);
-    carData?.car_exterior.forEach((item) => {
+    carData.car_exterier.forEach((item) => {
       formData.append("car_exterier", item);
     });
-    carData?.car_interier.forEach((item) => {
+    carData.car_interier.forEach((item) => {
       formData.append("car_interier", item);
     });
-    carData?.gallery.forEach((item) => {
+    carData.gallery.forEach((item) => {
       formData.append("gallery", item);
     });
     formData.append("car_color", JSON.stringify(colors));
@@ -60,39 +57,22 @@ function CarColorSection() {
 
     const res = await uploadcarDetail(formData);
     console.log("res", res);
-    if (res.code === 201) {
-      dispatch(removeCarData());
-      navigate("/home/car-detail");
-    }
   };
 
   // console.log("carColorData", carColorData);
 
   return (
     <div className="pr-4">
-      <div>
-        <div className="flex justify-between items-center">
-          <p className="banner-header">Car Color Model</p>
-          <button
-            className={`upload ${carColorData.length > 0 ? "" : "opacity-50"}`}
-            onClick={carDetailUpload}
-            disabled={carColorData.length === 0}
-          >
-            <MdDriveFolderUpload className="mr-2" size={20} />
-            Save & Upload
-          </button>
-        </div>
-      </div>
       <div className="flex space-x-4 mt-5">
         {carColorData.length > 0 &&
           carColorData.map((carColor, index) => {
             return (
               <div key={index}>
-                <div className="flex gap-8 items-center bg-gray-100 rounded-md py-4 px-5 mb-4">
+                <div className="flex gap-8 items-center bg-gray-100 rounded-md py-2 px-5 mb-4">
                   <img
                     src={URL.createObjectURL(carColor.colorImage)}
                     alt=""
-                    className="h-12 w-12 rounded-md"
+                    className="h-16 w-16 rounded-md"
                   />
                   <p>{carColor.colorName}</p>
                   <button className="bg-danger text-white rounded-md px-2 h-8">
@@ -107,8 +87,12 @@ function CarColorSection() {
         <div className="w-full flex justify-between items-center">
           <p className="banner-header">Color Name</p>
           <div className="flex justify-center space-x-4">
+            <button className="upload" onClick={carDetailUpload}>
+              <MdDriveFolderUpload className="mr-2" size={20} />
+              Save
+            </button>
             <button
-              className="flex items-center border border-primary bg-white text-primary text-[12px] semibold rounded-md px-7 py-2"
+              className="flex items-center bg-primary text-white text-[12px] semibold rounded-md px-4 py-3"
               onClick={addColorData}
             >
               <MdAddCircleOutline className="mr-2" size={20} />

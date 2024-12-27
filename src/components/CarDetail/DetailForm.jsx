@@ -1,29 +1,42 @@
 import { useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { IoIosCloseCircleOutline } from "react-icons/io";
-import { MdDriveFolderUpload } from "react-icons/md";
-import "./detailform.css";
 import CarModelSectoin from "./DetailForm/CarModelSectoin";
 import CarColorSection from "./DetailForm/CarColorSection";
 import CarImageSection from "./DetailForm/CarImageSection";
 
+import "./detailform.css";
+import { useNavigate } from "react-router-dom";
+
 const tabs = ["Car Model", "Image", "Color"];
 
-function DetailForm() {
-  // const childRef = useRef();
+const DetailForm = () => {
+  const navigate = useNavigate();
+  const [childFunction, setChildFunction] = useState(null);
   const [activeTab, setActiveTab] = useState(tabs[0]);
+
+  const callChildFunction = () => {
+    if (childFunction) {
+      childFunction(); // Call the child function
+    }
+  };
 
   const handleUploadClick = (tab) => {
     setActiveTab(tab);
+    callChildFunction();
   };
 
   return (
     <div>
       <div className="mt-1">
-        <div className="flex items-center space-x-2">
+        <button
+          className="flex items-center space-x-2 hover:text-primary"
+          onClick={() => {
+            navigate("/home/car-detail");
+          }}
+        >
           <BiArrowBack size={40} className="font-bold" />
           <span className="header my-4">Upload Car</span>
-        </div>
+        </button>
       </div>
 
       <div className="p-4 bg-white rounded-lg">
@@ -42,21 +55,13 @@ function DetailForm() {
               </button>
             ))}
           </div>
-          <div className="flex justify-center space-x-4">
-            <button className="cancel">
-              <IoIosCloseCircleOutline size={20} className="mr-2" />
-              Cancel
-            </button>
-            <button className="upload">
-              <MdDriveFolderUpload className="mr-2" size={20} />
-              Upload Car
-            </button>
-          </div>
         </div>
 
         <div className="overflow-y-auto h-[420px]">
           <div>
-            {activeTab === tabs[0] && <CarModelSectoin activeTab={activeTab} />}
+            {activeTab === tabs[0] && (
+              <CarModelSectoin triggerChildFunction={setChildFunction} />
+            )}
           </div>
           <div>{activeTab === tabs[1] && <CarImageSection />}</div>
           <div>{activeTab === tabs[2] && <CarColorSection />}</div>
@@ -64,6 +69,6 @@ function DetailForm() {
       </div>
     </div>
   );
-}
+};
 
 export default DetailForm;

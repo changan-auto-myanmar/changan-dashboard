@@ -7,13 +7,12 @@ const carSlice = createSlice({
     car_brand: "",
     car_name: "",
     car_slogan: "",
-    // Images for step 2
     mockup: null,
     car_banner: null,
     car_porche: null,
-    exteriorImages: [],
-    interiorImages: [],
-    galleryImages: [],
+    car_exterior: [],
+    car_interier: [],
+    gallery: [],
   },
   reducers: {
     setCarData: (state, action) => {
@@ -28,6 +27,19 @@ const carSlice = createSlice({
     setGalleryImages: (state, action) => {
       state.galleryImages = action.payload;
     },
+    removeCarData: () => {
+      return {
+        car_brand: "",
+        car_name: "",
+        car_slogan: "",
+        mockup: null,
+        car_banner: null,
+        car_porche: null,
+        car_exterior: [],
+        car_interier: [],
+        gallery: [],
+      };
+    },
   },
 });
 
@@ -36,6 +48,7 @@ export const {
   setExteriorImages,
   setInteriorImages,
   setGalleryImages,
+  removeCarData,
 } = carSlice.actions;
 export const selectCarData = (state) => state.car;
 export default carSlice.reducer;

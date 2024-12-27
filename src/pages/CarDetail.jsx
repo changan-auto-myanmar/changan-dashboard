@@ -53,9 +53,8 @@ const CarDetail = () => {
           </Link>
         </div>
 
-        <div>{activeTab === tabs[0] && <Changan data={sampleImages} />}</div>
-        <div>{activeTab === tabs[1] && <Deepin />}</div>
-        <div>{activeTab === tabs[2] && <Kaichen />}</div>
+        {/* Car Detail Content */}
+        <Changan data={sampleImages} />
       </div>
     </div>
   );

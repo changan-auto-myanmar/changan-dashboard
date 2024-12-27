@@ -1,10 +1,17 @@
 import { useState } from "react";
 import { MdDriveFolderUpload } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { setCarData, selectCarData } from "./../../../redux/carSlice";
+import { toast } from "sonner";
 
 function CarImageSection() {
-  const [exterier, setExterier] = useState([]);
-  const [interier, setInterier] = useState([]);
-  const [gallery, setGallery] = useState([]);
+  const dispatch = useDispatch();
+  const carData = useSelector(selectCarData);
+
+  const [car_exterier, setExterier] = useState(carData?.car_exterier || []);
+  const [car_interier, setInterier] = useState(carData?.car_interier || []);
+  const [gallery, setGallery] = useState(carData?.gallery || []);
+
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
     setExterier((prevImages) => [...prevImages, ...files]);
@@ -19,9 +26,28 @@ function CarImageSection() {
     const files = Array.from(event.target.files);
     setGallery((prevImages) => [...prevImages, ...files]);
   };
+
+  const handleState = () => {
+    const data = {
+      car_exterier: [...car_exterier],
+      car_interier: [...car_interier],
+      gallery: [...gallery],
+    };
+    dispatch(setCarData(data));
+    toast.info("Car Image Save Successfully");
+  };
+
   return (
     <div className="overflow-y-auto h-[420px]">
       <div>
+        <div className="flex justify-end px-4">
+          <div className="flex justify-center space-x-4">
+            <button className="upload" onClick={() => handleState()}>
+              <MdDriveFolderUpload className="mr-2" size={20} />
+              Save
+            </button>
+          </div>
+        </div>
         {/* Exterier */}
         <div>
           <div className="flex items-center">
@@ -51,9 +77,9 @@ function CarImageSection() {
                   </label>
                 </div>
               </div>
-              {exterier.length > 0 && (
+              {car_exterier && car_exterier.length > 0 && (
                 <div className="flex flex-wrap gap-4 mt-4">
-                  {exterier.map((image, index) => (
+                  {car_exterier.map((image, index) => (
                     <div key={index} className="w-[230px] h-[230px]">
                       <img
                         src={URL.createObjectURL(image)}
@@ -64,11 +90,10 @@ function CarImageSection() {
                   ))}
                 </div>
               )}
-              {exterier.length === 0 && (
-                <p className="text-sm text-gray-600 mt-5">
-                  Please upload image with file size less than 10MB.
-                </p>
-              )}
+
+              <p className="text-sm text-gray-600 mt-5">
+                Please upload image with file size less than 10MB.
+              </p>
             </div>
           </div>
         </div>
@@ -85,13 +110,13 @@ function CarImageSection() {
                   Select Image For Content
                 </h3>
                 <div className="flex flex-col items-center">
-                  <label htmlFor="file-upload" className="cursor-pointer">
+                  <label htmlFor="interier-upload" className="cursor-pointer">
                     <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                       <MdDriveFolderUpload size={20} className="mr-2" />
                       Select Image
                     </span>
                     <input
-                      id="file-upload"
+                      id="interier-upload"
                       type="file"
                       accept="image/*"
                       multiple
@@ -101,9 +126,9 @@ function CarImageSection() {
                   </label>
                 </div>
               </div>
-              {interier.length > 0 && (
+              {car_interier && car_interier.length > 0 && (
                 <div className="flex flex-wrap gap-4 mt-4">
-                  {interier.map((image, index) => (
+                  {car_interier.map((image, index) => (
                     <div key={index} className="w-[230px] h-[230px]">
                       <img
                         src={URL.createObjectURL(image)}
@@ -114,11 +139,10 @@ function CarImageSection() {
                   ))}
                 </div>
               )}
-              {interier.length === 0 && (
-                <p className="text-sm text-gray-600 mt-5">
-                  Please upload image with file size less than 10MB.
-                </p>
-              )}
+
+              <p className="text-sm text-gray-600 mt-5">
+                Please upload image with file size less than 10MB.
+              </p>
             </div>
           </div>
         </div>
@@ -135,13 +159,13 @@ function CarImageSection() {
                   Select Image For Content
                 </h3>
                 <div className="flex flex-col items-center">
-                  <label htmlFor="file-upload" className="cursor-pointer">
+                  <label htmlFor="gallery-upload" className="cursor-pointer">
                     <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                       <MdDriveFolderUpload size={20} className="mr-2" />
                       Select Image
                     </span>
                     <input
-                      id="file-upload"
+                      id="gallery-upload"
                       type="file"
                       accept="image/*"
                       multiple
@@ -151,7 +175,7 @@ function CarImageSection() {
                   </label>
                 </div>
               </div>
-              {gallery.length > 0 && (
+              {gallery && gallery.length > 0 && (
                 <div className="flex flex-wrap gap-4 mt-4">
                   {gallery.map((image, index) => (
                     <div key={index} className="w-[230px] h-[230px]">
@@ -164,11 +188,10 @@ function CarImageSection() {
                   ))}
                 </div>
               )}
-              {gallery.length === 0 && (
-                <p className="text-sm text-gray-600 mt-5">
-                  Please upload image with file size less than 10MB.
-                </p>
-              )}
+
+              <p className="text-sm text-gray-600 mt-5">
+                Please upload image with file size less than 10MB.
+              </p>
             </div>
           </div>
         </div>

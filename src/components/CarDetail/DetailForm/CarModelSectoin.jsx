@@ -1,21 +1,23 @@
 import { File } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setCarData, selectCarData } from "./../../../redux/carSlice";
+import { toast } from "sonner";
+// import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const brands = ["CHANGAN", "DEEPIN", "KAICHEN"];
+const brands = ["CHANGAN", "DEEPAL", "KAICHEN"];
 
-function CarModelSectoin({ handleState }) {
+function CarModelSectoin() {
   const dispatch = useDispatch();
   const carData = useSelector(selectCarData);
 
-  const [car_brand, setSelectedBrand] = useState(null);
-  const [car_name, setCarName] = useState("");
-  const [car_slogan, setCarSlogan] = useState("");
-  const [mockup, setMockup] = useState(null);
-  const [car_banner, setCarBanner] = useState(null);
-  const [car_porche, setCarPorche] = useState(null);
+  const [car_brand, setSelectedBrand] = useState(carData?.car_brand);
+  const [car_name, setCarName] = useState(carData?.car_name);
+  const [car_slogan, setCarSlogan] = useState(carData?.car_slogan);
+  const [mockup, setMockup] = useState(carData?.mockup);
+  const [car_banner, setCarBanner] = useState(carData?.car_banner);
+  const [car_porche, setCarPorche] = useState(carData?.car_porche);
 
   console.log("carData", carData);
 
@@ -29,27 +31,38 @@ function CarModelSectoin({ handleState }) {
       car_porche,
     };
     dispatch(setCarData(data));
-    console.log("data", data);
+    toast.info("Car Data Saved Successfully");
+    // console.log("data", data);
   };
 
   return (
     <div className="pr-4">
-      <div>
+      <div className="flex justify-between">
         <p className="banner-header">Car Brand</p>
-        <div>
-          <div className="flex space-x-4 mt-5">
-            {brands.map((brand) => (
-              <div key={brand} className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={car_brand === brand}
-                  className="checkbox"
-                  onChange={() => setSelectedBrand(brand)}
-                />
-                <label className="font-medium">{brand}</label>
-              </div>
-            ))}
-          </div>
+
+        <div className="flex justify-center space-x-4">
+          <button className="upload" onClick={() => handleState()}>
+            <MdDriveFolderUpload className="mr-2" size={20} />
+            Save
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <div className="flex space-x-4 mt-5">
+          {brands.map((brand) => (
+            <div key={brand} className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={
+                  car_brand ? car_brand === brand : carData.car_brand === brand
+                }
+                className="checkbox"
+                onChange={() => setSelectedBrand(brand)}
+              />
+              <label className="font-medium">{brand}</label>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -58,7 +71,7 @@ function CarModelSectoin({ handleState }) {
           <div className="flex flex-col space-y-2 w-1/2">
             <label className="banner-header">Car Title</label>
             <input
-              value={car_name}
+              value={car_name ? car_name : carData?.car_name}
               onChange={(e) => setCarName(e.target.value)}
               type="text"
               className="bg-gray-100 rounded-md px-6 py-4"
@@ -69,7 +82,7 @@ function CarModelSectoin({ handleState }) {
           <div className="flex flex-col space-y-2 w-1/2">
             <label className="banner-header">Car Sologram (Optional)</label>
             <input
-              value={car_slogan}
+              value={car_slogan ? car_slogan : carData?.car_slogan}
               onChange={(e) => setCarSlogan(e.target.value)}
               type="text"
               className="bg-gray-100 rounded-md px-6 py-4"
@@ -109,7 +122,16 @@ function CarModelSectoin({ handleState }) {
             />
           </div>
         )}
-        <p className="text-sm text-gray-600 mb-4">
+        {!car_banner && carData?.car_banner && (
+          <div className="mt-4">
+            <img
+              src={URL.createObjectURL(carData?.car_banner)}
+              alt="Mockup"
+              className="w-full h-64 object-cover"
+            />
+          </div>
+        )}
+        <p className="text-sm text-gray-600 mt-4">
           Please upload image with file size less than 10MB.
         </p>
       </div>
@@ -180,8 +202,8 @@ function CarModelSectoin({ handleState }) {
         <div className="mx-auto mt-5 p-6 rounded-lg box-dash w-full">
           {car_porche == null && (
             <div>
-              <div className="flex items-center justify-between">
-                <h3 className="text-[16px] font-semibold mb-4">
+              <div className="flex flex-col items-center justify-between gap-4 h-full">
+                <h3 className="text-[16px] font-semibold">
                   Select Car Brochure
                 </h3>
                 <div className="flex flex-col items-center">
@@ -199,11 +221,10 @@ function CarModelSectoin({ handleState }) {
                     />
                   </label>
                 </div>
+                <p className="text-sm text-gray-600 mb-4">
+                  Please upload image with file size less than 10MB.
+                </p>
               </div>
-
-              <p className="text-sm text-gray-600 mb-4">
-                Please upload image with file size less than 10MB.
-              </p>
             </div>
           )}
 
