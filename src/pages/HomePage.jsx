@@ -13,6 +13,7 @@ import DetailForm from "./../components/CarDetail/DetailForm";
 import NewAndEvent from "./../pages/NewAndEvent";
 import NewForm from "./../components/NewAndEvent/NewForm";
 import NewDetail from "../components/NewAndEvent/NewDetail";
+import DetailPage from "../components/CarDetail/DetailPage";
 
 function HomePage() {
   return (
@@ -24,6 +25,7 @@ function HomePage() {
           <Route path="/mail" element={<MailBox />} />
           <Route path="/car-detail" element={<CarDetail />} />
           <Route path="/car-detail/form" element={<DetailForm />} />
+          <Route path="/car-detail/:id" element={<DetailPage />} />
           <Route path="/new" element={<NewAndEvent />} />
           <Route path="/new/form" element={<NewForm />} />
           <Route path="/new/detail/:id" element={<NewDetail />} />
