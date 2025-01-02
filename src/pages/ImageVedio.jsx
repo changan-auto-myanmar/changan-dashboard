@@ -9,14 +9,7 @@ import ContactUs from "../components/ImageVedio/ContactUs";
 import Youtube from "../components/ImageVedio/Youtube";
 // import "swiper/swiper-bundle.min.css"; // Import Swiper styles
 
-const tabs = [
-  "Home",
-  "Car Models",
-  "About Us",
-  "Services",
-  "Contact Us",
-  "Videos",
-];
+const tabs = ["Home", "Car Models", "Videos"];
 
 // Sample dummy image URLs
 const sampleImages = [
@@ -53,10 +46,7 @@ const ImageVedio = () => {
 
         <div>{activeTab === tabs[0] && <Home data={sampleImages} />}</div>
         <div>{activeTab === tabs[1] && <CarModel />}</div>
-        <div>{activeTab === tabs[2] && <AboutUs />}</div>
-        <div>{activeTab === tabs[3] && <Services />}</div>
-        <div>{activeTab === tabs[4] && <ContactUs />}</div>
-        <div>{activeTab === tabs[5] && <Youtube />}</div>
+        <div>{activeTab === tabs[2] && <Youtube />}</div>
       </div>
     </div>
   );

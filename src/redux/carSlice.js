@@ -11,7 +11,7 @@ const carSlice = createSlice({
     car_banner: null,
     car_porche: null,
     car_exterior: [],
-    car_interier: [],
+    car_interior: [],
     gallery: [],
   },
   reducers: {

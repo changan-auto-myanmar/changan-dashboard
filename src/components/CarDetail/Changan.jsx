@@ -3,7 +3,8 @@ import Loading from "../Loading";
 import { Link } from "react-router-dom";
 
 function Changan({ data, loading, activeTab }) {
-  console.log(loading);
+  // console.log(loading);
+  // console.log(data);
   return (
     <div className="p-4 bg-white rounded-lg">
       <div className="flex items-center">
@@ -29,7 +30,7 @@ function Changan({ data, loading, activeTab }) {
               <div className="grid grid-cols-2 gap-10 my-5">
                 {data.map((image, index) => (
                   <div
-                    className="w-full h-auto rounded-lg overflow-hidden cursor-pointer p-2 bg-gray-200"
+                    className="w-full h-auto rounded-lg overflow-hidden cursor-pointer bg-gray-100"
                     key={index}
                   >
                     <div className="relative">
@@ -43,7 +44,7 @@ function Changan({ data, loading, activeTab }) {
                         </Link>
                       </div>
                       <img
-                        src={`https://changan-automobile.onrender.com/api/v1/${image.filepath}`}
+                        src={`https://changan-automobile.onrender.com/api/v1/${image?.car_banner.filepath}`}
                         alt="img"
                         className="w-full h-72 object-cover"
                       />

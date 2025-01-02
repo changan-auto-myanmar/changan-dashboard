@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCarData, selectCarData } from "./../../../redux/carSlice";
 import { toast } from "sonner";
 
-function CarImageSection() {
+function CarImageSection({ gotonext }) {
   const dispatch = useDispatch();
   const carData = useSelector(selectCarData);
 
@@ -29,12 +29,15 @@ function CarImageSection() {
 
   const handleState = () => {
     const data = {
-      car_exterier: [...car_exterier],
-      car_interier: [...car_interier],
+      car_exterior: [...car_exterier],
+      car_interior: [...car_interier],
       gallery: [...gallery],
     };
     dispatch(setCarData(data));
     toast.info("Car Image Save Successfully");
+    setTimeout(() => {
+      gotonext();
+    }, []);
   };
 
   return (
@@ -52,19 +55,19 @@ function CarImageSection() {
         <div>
           <div className="flex items-center">
             <p className="banner-header mr-2">Exterier</p>
-            <p>2/3</p>
+            <p>{car_exterier.length} /3</p>
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">
               <div className="flex w-full justify-between items-center">
                 <h3 className="text-[20px] font-semibold mb-4">
-                  Select Image For Content
+                  Select Multi Image For Exterier
                 </h3>
                 <div className="flex flex-col items-center">
                   <label htmlFor="file-upload" className="cursor-pointer">
                     <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                       <MdDriveFolderUpload size={20} className="mr-2" />
-                      Select Image
+                      Select Multi Image
                     </span>
                     <input
                       id="file-upload"
@@ -101,19 +104,19 @@ function CarImageSection() {
         <div className="mt-5">
           <div className="flex items-center">
             <p className="banner-header mr-2">Interier</p>
-            <p>2/3</p>
+            <p>{car_interier.length}/3</p>
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">
               <div className="flex w-full justify-between items-center">
                 <h3 className="text-[20px] font-semibold mb-4">
-                  Select Image For Content
+                  Select Multi Image For Interier
                 </h3>
                 <div className="flex flex-col items-center">
                   <label htmlFor="interier-upload" className="cursor-pointer">
                     <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                       <MdDriveFolderUpload size={20} className="mr-2" />
-                      Select Image
+                      Select Multi Image
                     </span>
                     <input
                       id="interier-upload"
@@ -150,19 +153,19 @@ function CarImageSection() {
         <div className="mt-5">
           <div className="flex items-center">
             <p className="banner-header mr-2">Gallery</p>
-            <p>2/3</p>
+            <p>{gallery.length}/3</p>
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">
               <div className="flex w-full justify-between items-center">
                 <h3 className="text-[20px] font-semibold mb-4">
-                  Select Image For Content
+                  Select Multi Image For Car Gallery
                 </h3>
                 <div className="flex flex-col items-center">
                   <label htmlFor="gallery-upload" className="cursor-pointer">
                     <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                       <MdDriveFolderUpload size={20} className="mr-2" />
-                      Select Image
+                      Select Multi Image
                     </span>
                     <input
                       id="gallery-upload"

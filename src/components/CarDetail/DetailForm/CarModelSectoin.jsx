@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 const brands = ["CHANGAN", "DEEPAL", "KAICHEN"];
 
-function CarModelSectoin() {
+function CarModelSectoin({ gotonext }) {
   const dispatch = useDispatch();
   const carData = useSelector(selectCarData);
 
@@ -32,6 +32,8 @@ function CarModelSectoin() {
     };
     dispatch(setCarData(data));
     toast.info("Car Data Saved Successfully");
+    gotonext();
+
     // console.log("data", data);
   };
 
@@ -210,7 +212,7 @@ function CarModelSectoin() {
                   <label htmlFor="borochure-upload" className="cursor-pointer">
                     <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                       <MdDriveFolderUpload size={20} className="mr-2" />
-                      Select Image
+                      Select File
                     </span>
                     <input
                       id="borochure-upload"

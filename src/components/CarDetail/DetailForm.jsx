@@ -11,18 +11,11 @@ const tabs = ["Car Model", "Image", "Color"];
 
 const DetailForm = () => {
   const navigate = useNavigate();
-  const [childFunction, setChildFunction] = useState(null);
   const [activeTab, setActiveTab] = useState(tabs[0]);
-
-  const callChildFunction = () => {
-    if (childFunction) {
-      childFunction(); // Call the child function
-    }
-  };
 
   const handleUploadClick = (tab) => {
     setActiveTab(tab);
-    callChildFunction();
+    // callChildFunction();
   };
 
   return (
@@ -60,10 +53,14 @@ const DetailForm = () => {
         <div className="overflow-y-auto h-[420px]">
           <div>
             {activeTab === tabs[0] && (
-              <CarModelSectoin triggerChildFunction={setChildFunction} />
+              <CarModelSectoin gotonext={() => handleUploadClick("Image")} />
             )}
           </div>
-          <div>{activeTab === tabs[1] && <CarImageSection />}</div>
+          <div>
+            {activeTab === tabs[1] && (
+              <CarImageSection gotonext={() => handleUploadClick("Color")} />
+            )}
+          </div>
           <div>{activeTab === tabs[2] && <CarColorSection />}</div>
         </div>
       </div>
