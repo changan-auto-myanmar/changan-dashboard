@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCarData, selectCarData } from "./../../../redux/carSlice";
 import { toast } from "sonner";
 
-function CarImageSection() {
+function CarImageSection({ carData }) {
   const dispatch = useDispatch();
-  const carData = useSelector(selectCarData);
+  // const carData = useSelector(selectCarData);
 
-  const [car_exterier, setExterier] = useState(carData?.car_exterier || []);
-  const [car_interier, setInterier] = useState(carData?.car_interier || []);
-  const [gallery, setGallery] = useState(carData?.gallery || []);
+  const [car_exterier, setExterier] = useState([]);
+  const [car_interier, setInterier] = useState([]);
+  const [gallery, setGallery] = useState([]);
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
@@ -52,13 +52,13 @@ function CarImageSection() {
         <div>
           <div className="flex items-center">
             <p className="banner-header mr-2">Exterier</p>
-            <p>2/3</p>
+            <p>{carData[0].car_exterior.length}/3</p>
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">
               <div className="flex w-full justify-between items-center">
                 <h3 className="text-[20px] font-semibold mb-4">
-                  Select Image For Content
+                  Select Image For Exterier
                 </h3>
                 <div className="flex flex-col items-center">
                   <label htmlFor="file-upload" className="cursor-pointer">
@@ -90,6 +90,19 @@ function CarImageSection() {
                   ))}
                 </div>
               )}
+              {carData[0].car_exterior.length > 0 && (
+                <div className="flex flex-wrap gap-4 mt-4">
+                  {carData[0].car_exterior.map((image, index) => (
+                    <div key={index} className="w-[230px] h-[230px]">
+                      <img
+                        src={`https://changan-automobile.onrender.com/api/v1/${carData[0]?.car_exterior.filepath}`}
+                        alt={`Exterier ${index + 1}`}
+                        className="w-full h-full object-cover rounded-md"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
 
               <p className="text-sm text-gray-600 mt-5">
                 Please upload image with file size less than 10MB.
@@ -101,13 +114,13 @@ function CarImageSection() {
         <div className="mt-5">
           <div className="flex items-center">
             <p className="banner-header mr-2">Interier</p>
-            <p>2/3</p>
+            <p>{carData[0].car_interior.length}/3</p>
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">
               <div className="flex w-full justify-between items-center">
                 <h3 className="text-[20px] font-semibold mb-4">
-                  Select Image For Content
+                  Select Image For Interior
                 </h3>
                 <div className="flex flex-col items-center">
                   <label htmlFor="interier-upload" className="cursor-pointer">
@@ -139,6 +152,19 @@ function CarImageSection() {
                   ))}
                 </div>
               )}
+              {carData[0]?.car_interior.length > 0 && (
+                <div className="flex flex-wrap gap-4 mt-4">
+                  {carData[0].car_interior.map((image, index) => (
+                    <div key={index} className="w-[230px] h-[230px]">
+                      <img
+                        src={`https://changan-automobile.onrender.com/api/v1/${carData[0]?.car_interior.filepath}`}
+                        alt={`Exterier ${index + 1}`}
+                        className="w-full h-full object-cover rounded-md"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
 
               <p className="text-sm text-gray-600 mt-5">
                 Please upload image with file size less than 10MB.
@@ -150,7 +176,7 @@ function CarImageSection() {
         <div className="mt-5">
           <div className="flex items-center">
             <p className="banner-header mr-2">Gallery</p>
-            <p>2/3</p>
+            <p>{carData[0]?.gallery.length}/3</p>
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">
@@ -181,7 +207,20 @@ function CarImageSection() {
                     <div key={index} className="w-[230px] h-[230px]">
                       <img
                         src={URL.createObjectURL(image)}
-                        alt={`Exterier ${index + 1}`}
+                        alt={`interior ${index + 1}`}
+                        className="w-full h-full object-cover rounded-md"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {carData[0]?.gallery.length > 0 && (
+                <div className="flex flex-wrap gap-4 mt-4">
+                  {carData[0].gallery.map((image, index) => (
+                    <div key={index} className="w-[230px] h-[230px]">
+                      <img
+                        src={`https://changan-automobile.onrender.com/api/v1/${carData[0]?.gallery.filepath}`}
+                        alt={`gallery ${index + 1}`}
                         className="w-full h-full object-cover rounded-md"
                       />
                     </div>

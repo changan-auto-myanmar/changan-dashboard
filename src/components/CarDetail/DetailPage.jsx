@@ -35,9 +35,16 @@ const DetailPage = () => {
           car_porche: res.data.showcase.car_porche,
         },
       ];
+      const datatwo = [
+        {
+          car_exterior: res.data.showcase.car_exterior,
+          car_interior: res.data.showcase.car_interior,
+          gallery: res.data.showcase.gallery,
+        },
+      ];
       SetCarModelSectoin(dataone);
-      SetCarColorSection(res.data.car_color);
-      SetCarImageSection(res.data.car_image);
+      SetCarImageSection(datatwo);
+      SetCarColorSection(res.data.car_image);
       setLoading(false);
     }
   };
@@ -101,7 +108,11 @@ const DetailPage = () => {
                   />
                 )}
               </div>
-              <div>{activeTab === tabs[1] && <CarImageSection />}</div>
+              <div>
+                {activeTab === tabs[1] && (
+                  <CarImageSection carData={CarImageSectionData} />
+                )}
+              </div>
               <div>{activeTab === tabs[2] && <CarColorSection />}</div>
             </div>
           )}

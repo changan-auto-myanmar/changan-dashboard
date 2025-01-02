@@ -15,7 +15,7 @@ const CarDetail = () => {
   const [CarDetailData, setCarDetailData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log(activeTab);
+  // console.log(activeTab);
 
   // console.log(CarDetailData);
 

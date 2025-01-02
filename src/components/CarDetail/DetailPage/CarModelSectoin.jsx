@@ -127,7 +127,7 @@ function CarModelSectoin({ id, carData }) {
         {car_banner === null && carData[0]?.car_banner && (
           <div className="mt-4">
             <img
-              src={`https://https://changan-automobile.onrender.com/api/v1/${carData[0]?.car_banner}`}
+              src={`https://changan-automobile.onrender.com/api/v1/${carData[0]?.car_banner.filepath}`}
               alt="Mockup"
               className="w-full h-64 object-cover"
             />
@@ -164,7 +164,7 @@ function CarModelSectoin({ id, carData }) {
               </div>
               <div className="relative my-2">
                 <img
-                  src={`https://https://changan-automobile.onrender.com/api/v1/${carData[0]?.mockup}`} // Placeholder image for demonstration; replace with your image URL
+                  src={`https://changan-automobile.onrender.com/api/v1/${carData[0]?.mockup.filepath}`} // Placeholder image for demonstration; replace with your image URL
                   alt="Car Mockup"
                   className="w-full h-48 object-cover rounded-lg"
                 />

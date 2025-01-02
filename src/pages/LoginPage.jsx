@@ -16,7 +16,7 @@ const Login = () => {
       password,
     };
     const res = await handleLogin(data);
-    console.log(res);
+    // console.log(res);
     if (res) {
       setTimeout(() => {
         navigate("/home/image-vedio");
