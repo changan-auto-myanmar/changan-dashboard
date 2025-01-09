@@ -67,7 +67,7 @@ function ServiceRequest() {
           </button>
         </div>
       </div>
-      <div className="w-full mt-5 h-[347px] overflow-y-auto rounded-lg">
+      <div className="w-full mt-5 h-screen overflow-y-auto rounded-lg">
         {loading && (
           <div className="flex flex-col justify-center items-center h-full">
             <LoaderPinwheelIcon

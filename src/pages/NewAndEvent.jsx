@@ -89,13 +89,13 @@ const NewAndEvent = () => {
           </div>
           <div>
             {loading && (
-              <div className="flex justify-center items-center h-[360px]">
+              <div className="flex justify-center items-center h-screen">
                 <Loading />
               </div>
             )}
 
             {!loading && (
-              <div className="overflow-y-auto mt-2 h-[360px]">
+              <div className="overflow-y-auto mt-2 h-screen">
                 <div className="grid gril-cols-1 lg:grid-cols-2 gap-10 my-5">
                   {filterNew.length > 0 &&
                     filterNew.map((newdata, index) => (

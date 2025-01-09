@@ -96,7 +96,7 @@ const DetailPage = () => {
           </div>
         </div>
 
-        <div className="overflow-y-auto h-[420px]">
+        <div className="overflow-y-auto h-screen">
           {!loading && (
             <div>
               <div>

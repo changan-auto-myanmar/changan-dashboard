@@ -95,7 +95,7 @@ function Youtube() {
           <Loading />
         </div>
       ) : (
-        <div className="overflow-y-auto mt-2 h-[350px]">
+        <div className="overflow-y-auto mt-2 h-screen">
           <div className="grid grid-cols-2 gap-10 my-5">
             {youtube.map((video) => (
               <div key={video._id} className="relative">

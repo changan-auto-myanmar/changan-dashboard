@@ -14,19 +14,19 @@ function Changan({ data, loading, activeTab }) {
         </span>
       </div>
       {loading && (
-        <div className="flex justify-center items-center h-[360px]">
+        <div className="flex justify-center items-center h-screen">
           <Loading />
         </div>
       )}
       {!loading && (
         <div>
           {data.length === 0 && (
-            <div className="flex justify-center items-center h-[360px]">
+            <div className="flex justify-center items-center h-screen">
               <span className="text-gray-500">No Car Data in this brand</span>
             </div>
           )}
           {data.length > 0 && (
-            <div className="overflow-y-auto mt-2 h-[360px]">
+            <div className="overflow-y-auto mt-2 h-screen">
               <div className="grid grid-cols-2 gap-10 my-5">
                 {data.map((image, index) => (
                   <div

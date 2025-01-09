@@ -50,7 +50,7 @@ const DetailForm = () => {
           </div>
         </div>
 
-        <div className="overflow-y-auto h-[420px]">
+        <div className="overflow-y-auto h-screen">
           <div>
             {activeTab === tabs[0] && (
               <CarModelSectoin gotonext={() => handleUploadClick("Image")} />
