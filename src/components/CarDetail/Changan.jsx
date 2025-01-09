@@ -27,7 +27,7 @@ function Changan({ data, loading, activeTab }) {
           )}
           {data.length > 0 && (
             <div className="overflow-y-auto mt-2 h-screen">
-              <div className="grid grid-cols-2 gap-10 my-5">
+              <div className="grid grid-cols-2 gap-10 my-5 pb-[200px]">
                 {data.map((image, index) => (
                   <div
                     className="w-full h-auto rounded-lg overflow-hidden cursor-pointer bg-gray-100"

@@ -96,7 +96,7 @@ const NewAndEvent = () => {
 
             {!loading && (
               <div className="overflow-y-auto mt-2 h-screen">
-                <div className="grid gril-cols-1 lg:grid-cols-2 gap-10 my-5">
+                <div className="grid gril-cols-1 lg:grid-cols-2 gap-10 my-5 pb-[200px]">
                   {filterNew.length > 0 &&
                     filterNew.map((newdata, index) => (
                       <div

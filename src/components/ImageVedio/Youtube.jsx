@@ -69,7 +69,7 @@ function Youtube() {
   }, []);
 
   return (
-    <div className="p-4 bg-white rounded-lg ">
+    <div className="p-4 bg-white rounded-lg">
       <div className="flex justify-between">
         <div className="">
           <span className="banner-header mt-5">Youtube Vedio</span>
@@ -96,7 +96,7 @@ function Youtube() {
         </div>
       ) : (
         <div className="overflow-y-auto mt-2 h-screen">
-          <div className="grid grid-cols-2 gap-10 my-5">
+          <div className="grid grid-cols-2 gap-10 my-5 mb-[250px]">
             {youtube.map((video) => (
               <div key={video._id} className="relative">
                 <iframe

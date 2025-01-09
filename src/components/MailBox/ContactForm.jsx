@@ -109,7 +109,7 @@ function ContactForm() {
                 <th className="py-4 px-4">Date</th>
                 <th className="py-4 px-4">Name</th>
                 <th className="py-4 px-4">Subject</th>
-                <th className="py-4 px-4">Description</th>
+                {/* <th className="py-4 px-4">Description</th> */}
                 <th className="py-4 px-4">Phone Num</th>
                 <th className="py-4 px-4">Email</th>
               </tr>
@@ -149,9 +149,9 @@ function ContactForm() {
                   </td>
                   <td className="py-2 px-4">{mail.name}</td>
                   <td className="py-2 px-4">{mail.subject}</td>
-                  <td className="py-2 px-4 w-48 overflow-hidden whitespace-nowrap text-ellipsis">
+                  {/* <td className="py-2 px-4 w-48 overflow-hidden whitespace-nowrap text-ellipsis">
                     {mail.description}
-                  </td>
+                  </td> */}
                   <td className="py-2 px-4">{mail.phone}</td>
                   <td className="py-2 px-4">{mail.email}</td>
                 </tr>

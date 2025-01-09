@@ -73,8 +73,8 @@ function Home() {
           <Loading />
         </div>
       ) : (
-        <div className="overflow-y-auto mt-2 h-[350px]">
-          <div className="grid grid-cols-2 gap-10 my-5">
+        <div className="overflow-y-auto mt-2 h-screen pb-10">
+          <div className="grid grid-cols-2 gap-10 my-5 pb-[200px]">
             {banners.map((image, index) => (
               <div
                 className="w-full h-72 relative rounded-lg overflow-hidden images"
