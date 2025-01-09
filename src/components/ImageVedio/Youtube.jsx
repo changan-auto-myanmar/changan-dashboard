@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MdOutlineEdit } from "react-icons/md";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { Trash2Icon } from "lucide-react";
 import { IoCheckmarkSharp } from "react-icons/io5";
@@ -8,6 +8,7 @@ import { AiOutlineUpload } from "react-icons/ai";
 import Loading from "../Loading";
 import YoutubeForm from "./YouTubeForm";
 import getYoutube from "../../api/banner/getYouTube";
+import deleteYoutube from "../../api/banner/deleteYoutube";
 
 function Youtube() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -15,6 +16,8 @@ function Youtube() {
   // const [youtube, setyoutube] = useState([]);
   const [youtube, setYoutube] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [show, setShow] = useState(false);
+  const [id, setId] = useState(null);
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -45,11 +48,12 @@ function Youtube() {
     getyoutube();
   };
 
-  const handleDeleteImage = async (id) => {
+  const handleDeleteImage = async () => {
     // Handle delete image logic
-    const res = await deleteyoutube(id);
+    const res = await deleteYoutube(id);
     if (res.code === 200) {
       getyoutube();
+      setShow(false);
     }
   };
 
@@ -71,18 +75,37 @@ function Youtube() {
             {youtube.length}/<span className="text-gray-500">8</span>
           </span>
         </div>
-        <button
-          onClick={() => setFormOpen(true)}
-          className={`flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95 ${
-            youtube.length >= 8
-              ? "cursor-not-allowed opacity-50"
-              : "cursor-pointer"
-          }`}
-          disabled={youtube.length >= 8}
-        >
-          <MdDriveFolderUpload className="mr-2" size={20} />
-          <span className="tabs-btn">Upload Youtube Link</span>
-        </button>
+        {show === true ? (
+          <div className="flex items-center space-x-4">
+            <button className="cancel" onClick={() => setShow(false)}>
+              <IoIosCloseCircleOutline size={20} className="mr-2" />
+              <p>Cancel</p>
+            </button>
+            <button className="delete" onClick={() => handleDeleteImage()}>
+              <Trash2Icon size={20} className="mr-2" />
+              <p>Delete Video</p>
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-4">
+            <button className="delete" onClick={() => setShow(true)}>
+              <Trash2Icon size={20} className="mr-2" />
+              <p>Delete Video</p>
+            </button>
+            <button
+              onClick={() => setFormOpen(true)}
+              className={`flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95 ${
+                youtube.length >= 8
+                  ? "cursor-not-allowed opacity-50"
+                  : "cursor-pointer"
+              }`}
+              disabled={youtube.length >= 8}
+            >
+              <MdDriveFolderUpload className="mr-2" size={20} />
+              <span className="tabs-btn">Upload Youtube Link</span>
+            </button>
+          </div>
+        )}
       </div>
       {loading ? (
         <div className="flex justify-center items-center h-[350px]">
@@ -101,6 +124,12 @@ function Youtube() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
+                {show && (
+                  <div className="absolute bottom-0 m-2 left-0 w-full h-full gap-4 flex items-center justify-center w-[100px] h-[50px] bg-white border border-primary rounded-md cursor-pointer text-primary">
+                    <input type="checkbox" onChange={() => setId(video._id)} />
+                    <p>Select</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
