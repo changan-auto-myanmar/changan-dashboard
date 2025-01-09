@@ -15,12 +15,6 @@ function Youtube() {
   // const [youtube, setyoutube] = useState([]);
   const [youtube, setYoutube] = useState([]);
   const [loading, setLoading] = useState(true);
-  const videos = [
-    { id: "6gSQkAwpJgY", title: "Video Title 1" },
-    { id: "EulEQ_1-Ufs", title: "Video Title 2" },
-    { id: "zjCyJUlkyjU", title: "Video Title 3" },
-    { id: "SqoZqG4Ja5Y", title: "Video Title 4" },
-  ];
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);

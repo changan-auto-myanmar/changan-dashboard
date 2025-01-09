@@ -2,14 +2,11 @@
 import { useState } from "react";
 import "swiper/css";
 import Home from "../components/ImageVedio/Home";
-import CarModel from "../components/ImageVedio/CarModel";
-import AboutUs from "../components/ImageVedio/AboutUs";
-import Services from "../components/ImageVedio/Services";
-import ContactUs from "../components/ImageVedio/ContactUs";
 import Youtube from "../components/ImageVedio/Youtube";
+import BrandOverview from "../components/ImageVedio/BrandOverview";
 // import "swiper/swiper-bundle.min.css"; // Import Swiper styles
 
-const tabs = ["Home", "Car Models", "Videos"];
+const tabs = ["Car Models", "Home", "Videos"];
 
 // Sample dummy image URLs
 const sampleImages = [
@@ -44,8 +41,8 @@ const ImageVedio = () => {
           ))}
         </div>
 
-        <div>{activeTab === tabs[0] && <Home data={sampleImages} />}</div>
-        <div>{activeTab === tabs[1] && <CarModel />}</div>
+        <div>{activeTab === tabs[1] && <Home data={sampleImages} />}</div>
+        <div>{activeTab === tabs[0] && <BrandOverview />}</div>
         <div>{activeTab === tabs[2] && <Youtube />}</div>
       </div>
     </div>
