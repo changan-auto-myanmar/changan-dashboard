@@ -5,6 +5,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdDriveFolderUpload, MdOutlineDeleteOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import constentUpload from "../../api/new/contentUpload";
+import { toast } from "sonner";
 
 const brands = ["News", "Events", "Promotions"];
 
@@ -17,6 +18,10 @@ function NewForm() {
   const [date, setDate] = useState("");
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
+    if (exterier.length + files.length > 5) {
+      toast.warning("You can only upload a maximum of 5 images.");
+      return;
+    }
     setExterier((prevImages) => [...prevImages, ...files]);
   };
 
@@ -126,10 +131,10 @@ function NewForm() {
         </div>
 
         {/* Exterier */}
-        <div>
+        <div className="mt-5">
           <div className="flex items-center">
             <p className="banner-header mr-2">Image</p>
-            {/* <p>2/3</p> */}
+            <p>{exterier.length}/5</p>
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">
@@ -137,22 +142,24 @@ function NewForm() {
                 <h3 className="text-[20px] font-semibold mb-4">
                   Select Image For Content
                 </h3>
-                <div className="flex flex-col items-center">
-                  <label htmlFor="file-upload" className="cursor-pointer">
-                    <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
-                      <MdDriveFolderUpload size={20} className="mr-2" />
-                      Select Image
-                    </span>
-                    <input
-                      id="file-upload"
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="hidden"
-                    />
-                  </label>
-                </div>
+                {exterier.length < 5 && (
+                  <div className="flex flex-col items-center">
+                    <label htmlFor="file-upload" className="cursor-pointer">
+                      <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
+                        <MdDriveFolderUpload size={20} className="mr-2" />
+                        Select Image
+                      </span>
+                      <input
+                        id="file-upload"
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                )}
               </div>
 
               <div className="">

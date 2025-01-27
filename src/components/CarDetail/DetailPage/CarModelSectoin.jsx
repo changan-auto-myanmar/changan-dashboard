@@ -7,7 +7,7 @@ import EditcarDetail from "../../../api/cardetail/EditcarDetail";
 const brands = ["CHANGAN", "DEEPAL", "KAICHEN"];
 
 function CarModelSectoin({ id, carData }) {
-  console.log("CarModelSectoinData", carData);
+  // console.log("CarModelSectoinData", carData);
   // const carData = useSelector(selectCarData);
 
   const [car_brand, setSelectedBrand] = useState(null);
@@ -17,7 +17,7 @@ function CarModelSectoin({ id, carData }) {
   const [car_banner, setCarBanner] = useState(null);
   const [car_porche, setCarPorche] = useState(null);
 
-  console.log("carData", carData);
+  // console.log("carData", carData);
 
   const handleState = async () => {
     const formData = new FormData();
@@ -29,10 +29,7 @@ function CarModelSectoin({ id, carData }) {
     car_banner && formData.append("car_banner", car_banner);
     car_porche && formData.append("car_porche", car_porche);
 
-    const res = await EditcarDetail({ id, data: formData });
-    console.log("res", res);
-
-    // console.log("data", data);
+    await EditcarDetail({ id, data: formData });
   };
 
   return (
@@ -40,12 +37,12 @@ function CarModelSectoin({ id, carData }) {
       <div className="flex justify-between">
         <p className="banner-header">Car Brand</p>
 
-        <div className="flex justify-center space-x-4">
+        {/* <div className="flex justify-center space-x-4">
           <button className="upload" onClick={() => handleState()}>
             <MdDriveFolderUpload className="mr-2" size={20} />
             Save
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div>
@@ -60,7 +57,8 @@ function CarModelSectoin({ id, carData }) {
                     : carData[0].car_brand === brand
                 }
                 className="checkbox"
-                onChange={() => setSelectedBrand(brand)}
+                // onChange={() => setSelectedBrand(brand)}
+                readOnly
               />
               <label className="font-medium">{brand}</label>
             </div>
@@ -74,10 +72,11 @@ function CarModelSectoin({ id, carData }) {
             <label className="banner-header">Car Title</label>
             <input
               value={car_name !== null ? car_name : carData[0]?.car_name}
-              onChange={(e) => setCarName(e.target.value)}
+              // onChange={(e) => setCarName(e.target.value)}
               type="text"
               className="bg-gray-100 rounded-md px-6 py-4"
               placeholder="Enter Car Title"
+              readOnly
             />
           </div>
 
@@ -89,6 +88,7 @@ function CarModelSectoin({ id, carData }) {
               type="text"
               className="bg-gray-100 rounded-md px-6 py-4"
               placeholder="Enter Car Sologram"
+              readOnly
             />
           </div>
         </div>
@@ -99,7 +99,7 @@ function CarModelSectoin({ id, carData }) {
           <h3 className="text-[16px] font-semibold mb-4">
             Select Car Banner Image
           </h3>
-          <div className="flex flex-col items-center">
+          {/* <div className="flex flex-col items-center">
             <label htmlFor="file-upload" className="cursor-pointer">
               <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                 <MdDriveFolderUpload size={20} className="mr-2" />
@@ -113,7 +113,7 @@ function CarModelSectoin({ id, carData }) {
                 className="hidden"
               />
             </label>
-          </div>
+          </div> */}
         </div>
         {car_banner && (
           <div className="mt-4">
@@ -127,7 +127,9 @@ function CarModelSectoin({ id, carData }) {
         {car_banner === null && carData[0]?.car_banner && (
           <div className="mt-4">
             <img
-              src={`https://changan-automobile.onrender.com/api/v1/${carData[0]?.car_banner.filepath}`}
+              src={`${import.meta.env.VITE_API_URL}api/v1/${
+                carData[0]?.car_banner.filepath
+              }`}
               alt="Mockup"
               className="w-full h-64 object-cover"
             />
@@ -146,7 +148,7 @@ function CarModelSectoin({ id, carData }) {
                 <h3 className="text-[16px] font-semibold mb-4">
                   Select Car Mock Up Image
                 </h3>
-                <div className="flex flex-col items-center">
+                {/* <div className="flex flex-col items-center">
                   <label htmlFor="mockup-upload" className="cursor-pointer">
                     <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                       <MdDriveFolderUpload size={20} className="mr-2" />
@@ -160,11 +162,13 @@ function CarModelSectoin({ id, carData }) {
                       className="hidden"
                     />
                   </label>
-                </div>
+                </div> */}
               </div>
               <div className="relative my-2">
                 <img
-                  src={`https://changan-automobile.onrender.com/api/v1/${carData[0]?.mockup.filepath}`} // Placeholder image for demonstration; replace with your image URL
+                  src={`${import.meta.env.VITE_API_URL}api/v1/${
+                    carData[0]?.mockup.filepath
+                  }`} // Placeholder image for demonstration; replace with your image URL
                   alt="Car Mockup"
                   className="w-full h-48 object-cover rounded-lg"
                 />
@@ -180,7 +184,7 @@ function CarModelSectoin({ id, carData }) {
                 <h3 className="text-[16px] font-semibold mb-4">
                   Select Car Mock Up Image
                 </h3>
-                <div className="flex flex-col items-center">
+                {/* <div className="flex flex-col items-center">
                   <label htmlFor="mockup-upload" className="cursor-pointer">
                     <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                       <MdDriveFolderUpload size={20} className="mr-2" />
@@ -194,7 +198,7 @@ function CarModelSectoin({ id, carData }) {
                       className="hidden"
                     />
                   </label>
-                </div>
+                </div> */}
               </div>
               <div className="relative my-2">
                 <img
@@ -217,7 +221,7 @@ function CarModelSectoin({ id, carData }) {
                 <h3 className="text-[16px] font-semibold mb-4">
                   Select Car Brochure
                 </h3>
-                <div className="flex flex-col items-center">
+                {/* <div className="flex flex-col items-center">
                   <label htmlFor="borochure-upload" className="cursor-pointer">
                     <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
                       <MdDriveFolderUpload size={20} className="mr-2" />
@@ -231,14 +235,16 @@ function CarModelSectoin({ id, carData }) {
                       className="hidden"
                     />
                   </label>
-                </div>
+                </div> */}
               </div>
               <div className="relative my-2 flex justify-center items-center h-48">
                 <div
                   className="flex py-5 mx-10 px-10 bg-gray-100 rounded-md w-full justify-center items-center cursor-pointer"
                   onClick={() => {
                     window.open(
-                      `https://changan-automobile.onrender.com/api/v1/${carData[0]?.car_porche?.filepath}`,
+                      `${import.meta.env.VITE_API_URL}api/v1/${
+                        carData[0]?.car_porche?.filepath
+                      }`,
                       "_blank"
                     );
                   }}
@@ -263,21 +269,21 @@ function CarModelSectoin({ id, carData }) {
                 <h3 className="text-[16px] font-semibold mb-4">
                   Select Car Brochure
                 </h3>
-                <div className="flex flex-col items-center">
-                  <label htmlFor="mockup-upload" className="cursor-pointer">
-                    <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
-                      <MdDriveFolderUpload size={20} className="mr-2" />
-                      Select Image
-                    </span>
-                    <input
-                      id="mockup-upload"
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => setMockup(e.target.files[0])}
-                      className="hidden"
-                    />
-                  </label>
-                </div>
+                {/* <div className="flex flex-col items-center">
+                    <label htmlFor="mockup-upload" className="cursor-pointer">
+                      <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
+                        <MdDriveFolderUpload size={20} className="mr-2" />
+                        Select Image
+                      </span>
+                      <input
+                        id="mockup-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setMockup(e.target.files[0])}
+                        className="hidden"
+                      />
+                    </label>
+                  </div> */}
               </div>
               <div className="relative my-2 flex justify-center items-center h-48">
                 <div className="flex py-5 mx-10 px-10 bg-gray-100 rounded-md w-full justify-center items-center">

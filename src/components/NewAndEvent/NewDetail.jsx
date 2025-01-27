@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the CSS file
 import { CalendarIcon } from "lucide-react";
+import { toast } from "sonner";
 const brands = ["News", "Events", "Promotions"];
 
 function NewDetail() {
@@ -25,6 +26,10 @@ function NewDetail() {
   const [date, setDate] = useState("");
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
+    if (exterier.length + files.length > 5) {
+      toast.warning("You can only upload a maximum of 5 images.");
+      return;
+    }
     setImages((prevImages) => [...prevImages, ...files]);
   };
 
@@ -224,7 +229,9 @@ function NewDetail() {
                     exterier.map((image, index) => (
                       <div key={index} className="w-[230px] h-[230px] relative">
                         <img
-                          src={`https://changan-automobile.onrender.com/api/v1/${image.filepath}`}
+                          src={`${import.meta.env.VITE_API_URL}api/v1/${
+                            image.filepath
+                          }`}
                           alt={`Exterier ${index + 1}`}
                           className="w-full h-full object-cover rounded-md"
                         />
@@ -241,7 +248,7 @@ function NewDetail() {
                       <div key={index} className="w-[230px] h-[230px] relative">
                         <img
                           src={URL.createObjectURL(image)}
-                          alt={`Exterier ${index + 1}`}
+                          alt={`image ${index + 1}`}
                           className="w-full h-full object-cover rounded-md"
                         />
                         <button

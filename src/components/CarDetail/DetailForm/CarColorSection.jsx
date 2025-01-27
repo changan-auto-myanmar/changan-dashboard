@@ -56,7 +56,7 @@ function CarColorSection() {
       formData.append(`car_color[${index}].car_color`, item.carColorImage);
     });
 
-    console.log("formData", formData.values);
+    // console.log("formData", formData.values);
 
     const res = await uploadcarDetail(formData);
     console.log("res", res);

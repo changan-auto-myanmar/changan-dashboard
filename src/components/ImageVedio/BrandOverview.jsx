@@ -1,10 +1,10 @@
-import { Trash2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { IoCheckmarkSharp } from "react-icons/io5";
 import { MdDriveFolderUpload, MdOutlineEdit } from "react-icons/md";
-import getBrandOverview from "../../api/brandoverview/getBrandOverview";
-import Loading from "../Loading";
 import { Link } from "react-router-dom";
+// api
+import getBrandOverview from "../../api/brandoverview/getBrandOverview";
+// components
+import Loading from "../Loading";
 
 function BrandOverview() {
   const [loading, setLoading] = useState(true);
@@ -30,15 +30,15 @@ function BrandOverview() {
           <div className="">
             <span className="banner-header mt-5">Brand Overview Images</span>
             <span className="font-semibold text-[16px] ms-5">
-              {brands.length}/<span className="text-gray-500">3</span>
+              {brands.length}/<span className="text-gray-500">5</span>
             </span>
           </div>
           <Link
             to="overview/form"
             className={`flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95 ${
-              brands.length >= 3 ? "pointer-events-none opacity-50" : ""
+              brands.length >= 5 ? "pointer-events-none opacity-50" : ""
             }`}
-            disabled={brands.length >= 3}
+            disabled={brands.length >= 5}
           >
             <MdDriveFolderUpload className="mr-2" size={20} />
             <span className="tabs-btn">Upload Image</span>
@@ -76,7 +76,9 @@ function BrandOverview() {
                         </div>
                         {brand.images.length > 0 && (
                           <img
-                            src={`https://changan-automobile.onrender.com/api/v1/${brand?.images[0].filepath}`}
+                            src={`${import.meta.env.VITE_API_URL}api/v1/${
+                              brand?.images[0].filepath
+                            }`}
                             alt="img"
                             className="w-full h-72 object-cover rounded-md"
                           />

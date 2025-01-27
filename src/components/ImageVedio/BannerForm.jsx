@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { AiOutlineUpload } from "react-icons/ai";
-import { FaImages } from "react-icons/fa";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdDriveFolderUpload } from "react-icons/md";
+
 import uploadBanners from "../../api/banner/uploadBanner";
 
 function BannerForm({ onclose }) {

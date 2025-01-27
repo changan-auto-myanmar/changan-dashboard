@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { MdOutlineEdit } from "react-icons/md";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { Trash2Icon } from "lucide-react";
-import { IoCheckmarkSharp } from "react-icons/io5";
-import { AiOutlineUpload } from "react-icons/ai";
+//api
 import getAllBanner from "../../api/banner/getBanner";
-import BannerForm from "./BannerForm";
 import deleteBanners from "../../api/banner/deleteBanners";
+// components
+import BannerForm from "./BannerForm";
 import Loading from "../Loading";
-import editBanner from "../../api/banner/editbanner";
 import BannerModel from "./BannerModel";
 
 function Home() {
@@ -52,17 +51,17 @@ function Home() {
         <div className="">
           <span className="banner-header mt-5">Banner Images</span>
           <span className="font-semibold text-[16px] ms-5">
-            {banners.length}/<span className="text-gray-500">8</span>
+            {banners.length}/<span className="text-gray-500">5</span>
           </span>
         </div>
         <button
           onClick={() => setFormOpen(true)}
           className={`flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95 ${
-            banners.length >= 8
+            banners.length >= 5
               ? "cursor-not-allowed opacity-50"
               : "cursor-pointer"
           }`}
-          disabled={banners.length >= 8}
+          disabled={banners.length >= 5}
         >
           <MdDriveFolderUpload className="mr-2" size={20} />
           <span className="tabs-btn">Upload Image</span>
@@ -74,7 +73,7 @@ function Home() {
         </div>
       ) : (
         <div className="overflow-y-auto mt-2 h-screen pb-10">
-          <div className="grid grid-cols-2 gap-10 my-5 pb-[200px]">
+          <div className="grid  grid-cols-1 lg:grid-cols-2 gap-10 my-5 pb-[200px]">
             {banners.map((image, index) => (
               <div
                 className="w-full h-72 relative rounded-lg overflow-hidden images"
@@ -99,7 +98,9 @@ function Home() {
                   </button>
                 </div>
                 <img
-                  src={`https://changan-automobile.onrender.com/api/v1/${image.filepath}`}
+                  src={`${import.meta.env.VITE_API_URL}api/v1/${
+                    image.filepath
+                  }`}
                   alt="img"
                   className="w-full h-72 object-cover"
                 />

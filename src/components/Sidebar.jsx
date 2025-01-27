@@ -4,22 +4,22 @@ import { Newspaper } from "lucide-react";
 import { IoMailOutline } from "react-icons/io5";
 import { IoMdCar } from "react-icons/io";
 
-import logo from "./../assets/image/logo.png";
+import logo from "./../assets/logo.png";
 
 const Sidebar = () => {
   return (
     <div className="flex bg-gray-100 h-screen text-black px-5 w-78 ">
       <div className="bg-white px-5 mt-5 rounded-md ">
         <div className="flex items-center justify-center ">
-          <img src={logo} className="" />
+          <img src={logo} className="w-[150px]" />
         </div>
-        <nav className="flex-1 mt-10">
+        <nav className="flex-1">
           <ul className="space-y-2">
             <li>
               <NavLink
                 to="/home/image-vedio"
                 className={({ isActive }) =>
-                  `block flex px-2 py-3 rounded ${
+                  `block flex items-center  px-2 py-3 rounded ${
                     isActive
                       ? "bg-primary text-white font-semibold"
                       : "hover:bg-primary hover:text-white text-black "
@@ -34,7 +34,7 @@ const Sidebar = () => {
               <NavLink
                 to="/home/car-detail"
                 className={({ isActive }) =>
-                  `block flex px-2 py-3 rounded ${
+                  `block flex items-center  px-2 py-3 rounded ${
                     isActive
                       ? "bg-primary text-white font-semibold"
                       : "hover:bg-primary hover:text-white text-black "
@@ -49,7 +49,7 @@ const Sidebar = () => {
               <NavLink
                 to="/home/mail"
                 className={({ isActive }) =>
-                  `block flex px-2 py-3 rounded ${
+                  `block flex items-center px-2 py-3 rounded ${
                     isActive
                       ? "bg-primary text-white font-semibold"
                       : "hover:bg-primary hover:text-white text-black "
@@ -64,7 +64,7 @@ const Sidebar = () => {
               <NavLink
                 to="/home/new"
                 className={({ isActive }) =>
-                  `block flex px-2 py-3 rounded ${
+                  `block flex items-center  px-2 py-3 rounded ${
                     isActive
                       ? "bg-primary text-white font-semibold"
                       : "hover:bg-primary hover:text-white text-black "

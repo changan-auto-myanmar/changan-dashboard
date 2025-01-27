@@ -1,16 +1,13 @@
 import { Trash } from "lucide-react";
 import { useState } from "react";
 import { MdAddCircleOutline, MdDriveFolderUpload } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { removeCarData, selectCarData } from "./../../../redux/carSlice";
-import uploadcarDetail from "../../../api/cardetail/uploadcarDetail";
 import { useNavigate } from "react-router-dom";
+import EditcarDetail from "../../../api/cardetail/EditcarDetail";
 
-function CarColorSection() {
+function CarColorSection({ carData, id }) {
+  console.log("carColor", carData);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [carColorData, setcarColorData] = useState([]);
-  const carData = useSelector(selectCarData);
   const [colorName, setColorName] = useState("");
   const [colorImage, setcolorImage] = useState(null);
   const [carColorImage, setcarColorImage] = useState(null);
@@ -27,7 +24,7 @@ function CarColorSection() {
     setcarColorImage(null);
   };
 
-  console.log("carColorData", carColorData);
+  // console.log("carColorData", carColorData);
 
   const carDetailUpload = async () => {
     const formData = new FormData();
@@ -35,33 +32,17 @@ function CarColorSection() {
       color_name: item.colorName,
     }));
 
-    formData.append("car_brand", carData.car_brand);
-    formData.append("car_name", carData.car_name);
-    formData.append("car_slogan", carData.car_slogan);
-    formData.append("mockup", carData.mockup);
-    formData.append("car_banner", carData.car_banner);
-    formData.append("car_porche", carData.car_porche);
-    carData?.car_exterior.forEach((item) => {
-      formData.append("car_exterier", item);
-    });
-    carData?.car_interier.forEach((item) => {
-      formData.append("car_interier", item);
-    });
-    carData?.gallery.forEach((item) => {
-      formData.append("gallery", item);
-    });
     formData.append("car_color", JSON.stringify(colors));
     carColorData.forEach((item, index) => {
       formData.append(`car_color[${index}].car_image`, item.colorImage);
       formData.append(`car_color[${index}].car_color`, item.carColorImage);
     });
 
-    console.log("formData", formData.values);
+    // console.log("formData", formData);
 
-    const res = await uploadcarDetail(formData);
+    const res = await EditcarDetail({ id, data: formData });
     console.log("res", res);
     if (res.code === 201) {
-      dispatch(removeCarData());
       navigate("/home/car-detail");
     }
   };
@@ -73,28 +54,52 @@ function CarColorSection() {
       <div>
         <div className="flex justify-between items-center">
           <p className="banner-header">Car Color Model</p>
-          <button
+          {/* <button
             className={`upload ${carColorData.length > 0 ? "" : "opacity-50"}`}
             onClick={carDetailUpload}
             disabled={carColorData.length === 0}
           >
             <MdDriveFolderUpload className="mr-2" size={20} />
             Save & Upload
-          </button>
+          </button> */}
         </div>
       </div>
-      <div className="flex space-x-4 mt-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
+        {carData[0]?.car_color.length > 0 &&
+          carData[0]?.car_color.map((carColor, index) => {
+            return (
+              <div key={index}>
+                <div className="flex gap-8 items-center bg-gray-100 justify-between rounded-md py-4 px-5 mb-4 shadow-md border border-gray-300">
+                  <div className="flex items-center">
+                    <img
+                      src={`${import.meta.env.VITE_API_URL}api/v1/${
+                        carColor.car_color.filepath
+                      }`}
+                      alt=""
+                      className="h-12 w-12 rounded-md mr-5"
+                    />
+                    <p>{carColor.color_name}</p>
+                  </div>
+                  {/* <button className="bg-danger text-white rounded-md px-2 h-8">
+                    <Trash size={20} />
+                  </button> */}
+                </div>
+              </div>
+            );
+          })}
         {carColorData.length > 0 &&
           carColorData.map((carColor, index) => {
             return (
               <div key={index}>
-                <div className="flex gap-8 items-center bg-gray-100 rounded-md py-4 px-5 mb-4">
-                  <img
-                    src={URL.createObjectURL(carColor.colorImage)}
-                    alt=""
-                    className="h-12 w-12 rounded-md"
-                  />
-                  <p>{carColor.colorName}</p>
+                <div className="flex shadow-md border border-gray-300 justify-between items-center bg-gray-100 rounded-md py-4 px-5 mb-4">
+                  <div className="flex">
+                    <img
+                      src={URL.createObjectURL(carColor.colorImage)}
+                      alt=""
+                      className="h-12 w-12 rounded-md mr-5"
+                    />
+                    <p>{carColor.colorName}</p>
+                  </div>
                   <button className="bg-danger text-white rounded-md px-2 h-8">
                     <Trash size={20} />
                   </button>
@@ -103,7 +108,7 @@ function CarColorSection() {
             );
           })}
       </div>
-      <div className="flex justify-between items-center mt-5 mb-4">
+      {/* <div className="flex justify-between items-center mt-5 mb-4">
         <div className="w-full flex justify-between items-center">
           <p className="banner-header">Color Name</p>
           <div className="flex justify-center space-x-4">
@@ -116,9 +121,9 @@ function CarColorSection() {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="flex flex-col mt-2">
+      {/* <div className="flex flex-col mt-2">
         <input
           value={colorName}
           onChange={(e) => setColorName(e.target.value)}
@@ -247,7 +252,7 @@ function CarColorSection() {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

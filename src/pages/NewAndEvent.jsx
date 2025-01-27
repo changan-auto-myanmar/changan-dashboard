@@ -104,7 +104,7 @@ const NewAndEvent = () => {
                         key={index}
                       >
                         <div className="relative">
-                          <div className="absolute top-0 right-0 p-2 z-10">
+                          <div className="absolute top-0 right-0 p-5 z-10">
                             <div className="flex items-center space-x-2">
                               <Link
                                 to={`/home/new/detail/${newdata._id}`}
@@ -122,7 +122,9 @@ const NewAndEvent = () => {
                             </div>
                           </div>
                           <img
-                            src={`https://changan-automobile.onrender.com/api/v1/${newdata?.images[0]?.filepath}`}
+                            src={`${import.meta.env.VITE_API_URL}api/v1/${
+                              newdata?.images[0]?.filepath
+                            }`}
                             alt="img"
                             className="w-full h-72 object-cover"
                           />

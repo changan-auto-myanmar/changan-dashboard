@@ -7,6 +7,7 @@ import { MdDriveFolderUpload } from "react-icons/md";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Trash2Icon } from "lucide-react";
 import uploadBrandOverview from "../../api/brandoverview/uploadBrandOverview";
+import { toast } from "sonner";
 
 const brands = ["CHANGAN", "DEEPAL", "KAICHENG"];
 
@@ -17,6 +18,10 @@ const BrandOverviewForm = () => {
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
+    if (car_exterier.length + files.length > 5) {
+      toast.warning("You can only upload a maximum of 5 images.");
+      return;
+    }
     setExterier((prevImages) => [...prevImages, ...files]);
   };
   console.log("car_exterier", car_exterier);

@@ -23,7 +23,7 @@ const DetailPage = () => {
 
   const getAData = async () => {
     const res = await getACarDetail(id);
-    console.log(res);
+    console.log("carDetail", res);
     if (res.code === 200) {
       const dataone = [
         {
@@ -42,9 +42,14 @@ const DetailPage = () => {
           gallery: res.data.showcase.gallery,
         },
       ];
+      const datathree = [
+        {
+          car_color: res.data.showcase.car_color,
+        },
+      ];
       SetCarModelSectoin(dataone);
       SetCarImageSection(datatwo);
-      SetCarColorSection(res.data.car_image);
+      SetCarColorSection(datathree);
       setLoading(false);
     }
   };
@@ -110,10 +115,14 @@ const DetailPage = () => {
               </div>
               <div>
                 {activeTab === tabs[1] && (
-                  <CarImageSection carData={CarImageSectionData} />
+                  <CarImageSection carData={CarImageSectionData} id={id} />
                 )}
               </div>
-              <div>{activeTab === tabs[2] && <CarColorSection />}</div>
+              <div>
+                {activeTab === tabs[2] && (
+                  <CarColorSection carData={CarColorSectionData} id={id} />
+                )}
+              </div>
             </div>
           )}
         </div>

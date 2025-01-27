@@ -1,22 +1,11 @@
 // HomePage.js
 import { useState } from "react";
-import "swiper/css";
 import Home from "../components/ImageVedio/Home";
 import Youtube from "../components/ImageVedio/Youtube";
 import BrandOverview from "../components/ImageVedio/BrandOverview";
-// import "swiper/swiper-bundle.min.css"; // Import Swiper styles
+import "swiper/css";
 
 const tabs = ["Car Models", "Home", "Videos"];
-
-// Sample dummy image URLs
-const sampleImages = [
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "https://images.pexels.com/photos/159045/the-interior-of-the-repair-interior-design-159045.jpeg?auto=compress&cs=tinysrgb&w=800",
-];
 
 const ImageVedio = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
@@ -41,7 +30,7 @@ const ImageVedio = () => {
           ))}
         </div>
 
-        <div>{activeTab === tabs[1] && <Home data={sampleImages} />}</div>
+        <div>{activeTab === tabs[1] && <Home />}</div>
         <div>{activeTab === tabs[0] && <BrandOverview />}</div>
         <div>{activeTab === tabs[2] && <Youtube />}</div>
       </div>

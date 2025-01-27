@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { MdDriveFolderUpload } from "react-icons/md";
 import Changan from "../components/CarDetail/Changan";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import getAllCarDetail from "../api/cardetail/getAllCarDetail";
 
 import "swiper/css";
@@ -11,6 +11,7 @@ const tabs = ["CHANGAN", "DEEPAL", "KAICHEN"];
 
 // Sample dummy image URLs
 const CarDetail = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [CarDetailData, setCarDetailData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,13 +63,20 @@ const CarDetail = () => {
             ))}
           </div>
 
-          <Link
-            to="/home/car-detail/form"
-            className="flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95"
+          <button
+            onClick={() => {
+              navigate("/home/car-detail/form");
+            }}
+            className={`flex items-center bg-primary text-white px-4 py-3 rounded-md  ${
+              CarDetailData.length == 8
+                ? "opacity-50 cursor-not-allowed"
+                : "opacity-100 cursor-pointer active:scale-95 "
+            }`}
+            disabled={CarDetailData.length >= 8}
           >
             <MdDriveFolderUpload className="mr-2" size={20} />
-            <span className="tabs-btn">Upload Image</span>
-          </Link>
+            <span className="tabs-btn">Upload Car</span>
+          </button>
         </div>
 
         {/* Car Detail Content */}

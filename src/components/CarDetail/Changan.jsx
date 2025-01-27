@@ -44,7 +44,9 @@ function Changan({ data, loading, activeTab }) {
                         </Link>
                       </div>
                       <img
-                        src={`https://changan-automobile.onrender.com/api/v1/${image?.car_banner.filepath}`}
+                        src={`${import.meta.env.VITE_API_URL}api/v1/${
+                          image?.car_banner.filepath
+                        }`}
                         alt="img"
                         className="w-full h-72 object-cover"
                       />
