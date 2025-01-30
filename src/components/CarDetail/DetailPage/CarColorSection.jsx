@@ -50,7 +50,7 @@ function CarColorSection({ carData, id }) {
   // console.log("carColorData", carColorData);
 
   return (
-    <div className="pr-4">
+    <div className="pr-4 pb-40">
       <div>
         <div className="flex justify-between items-center">
           <p className="banner-header">Car Color Model</p>

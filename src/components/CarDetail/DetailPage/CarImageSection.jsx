@@ -41,7 +41,7 @@ function CarImageSection({ carData, id }) {
   };
 
   return (
-    <div className="overflow-y-auto h-[420px]">
+    <div className="pb-40">
       <div>
         {/* <div className="flex justify-end px-4">
           <div className="flex justify-center space-x-4">

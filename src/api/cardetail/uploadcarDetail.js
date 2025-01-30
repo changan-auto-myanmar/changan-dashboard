@@ -15,6 +15,7 @@ const uploadcarDetail = async (data) => {
     });
     return response.data;
   } catch (error) {
+    console.log("Error uploading car detail:", error);
     toast.error(`${error.response.data.message}`, {
       id: toastId,
       autoClose: 500, // Auto-close the toast after 5 seconds

@@ -44,7 +44,7 @@ function CarColorSection() {
     carData?.car_exterior.forEach((item) => {
       formData.append("car_exterier", item);
     });
-    carData?.car_interier.forEach((item) => {
+    carData?.car_interior.forEach((item) => {
       formData.append("car_interier", item);
     });
     carData?.gallery.forEach((item) => {

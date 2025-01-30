@@ -33,7 +33,7 @@ function CarModelSectoin({ id, carData }) {
   };
 
   return (
-    <div className="pr-4">
+    <div className="pr-4 pb-40">
       <div className="flex justify-between">
         <p className="banner-header">Car Brand</p>
 

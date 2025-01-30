@@ -3,13 +3,14 @@ import { MdDriveFolderUpload } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setCarData, selectCarData } from "./../../../redux/carSlice";
 import { toast } from "sonner";
+import { TrashIcon } from "lucide-react";
 
 function CarImageSection({ gotonext }) {
   const dispatch = useDispatch();
   const carData = useSelector(selectCarData);
 
-  const [car_exterier, setExterier] = useState(carData?.car_exterier || []);
-  const [car_interier, setInterier] = useState(carData?.car_interier || []);
+  const [car_exterier, setExterier] = useState(carData?.car_exterior || []);
+  const [car_interier, setInterier] = useState(carData?.car_interior || []);
   const [gallery, setGallery] = useState(carData?.gallery || []);
 
   const handleImageChange = (event) => {
@@ -97,12 +98,23 @@ function CarImageSection({ gotonext }) {
               {car_exterier && car_exterier.length > 0 && (
                 <div className="flex flex-wrap gap-4 mt-4">
                   {car_exterier.map((image, index) => (
-                    <div key={index} className="w-[230px] h-[230px]">
+                    <div key={index} className="w-[230px] h-[230px] relative">
                       <img
                         src={URL.createObjectURL(image)}
                         alt={`Exterier ${index + 1}`}
                         className="w-full h-full object-cover rounded-md"
                       />
+                      <button
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-md p-2 hover:bg-red-600 transition duration-300 active:bg-red-700"
+                        onClick={() => {
+                          const updatedImages = car_exterier.filter(
+                            (_, i) => i !== index
+                          );
+                          setExterier(updatedImages);
+                        }}
+                      >
+                        <TrashIcon className="w-6 h-6" />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -148,12 +160,23 @@ function CarImageSection({ gotonext }) {
               {car_interier && car_interier.length > 0 && (
                 <div className="flex flex-wrap gap-4 mt-4">
                   {car_interier.map((image, index) => (
-                    <div key={index} className="w-[230px] h-[230px]">
+                    <div key={index} className="w-[230px] h-[230px] relative">
                       <img
                         src={URL.createObjectURL(image)}
                         alt={`Exterier ${index + 1}`}
                         className="w-full h-full object-cover rounded-md"
                       />
+                      <button
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-md p-2 hover:bg-red-600 transition duration-300 active:bg-red-700"
+                        onClick={() => {
+                          const updatedImages = car_interier.filter(
+                            (_, i) => i !== index
+                          );
+                          setInterier(updatedImages);
+                        }}
+                      >
+                        <TrashIcon className="w-6 h-6" />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -199,12 +222,23 @@ function CarImageSection({ gotonext }) {
               {gallery && gallery.length > 0 && (
                 <div className="flex flex-wrap gap-4 mt-4">
                   {gallery.map((image, index) => (
-                    <div key={index} className="w-[230px] h-[230px]">
+                    <div key={index} className="w-[230px] h-[230px] relative">
                       <img
                         src={URL.createObjectURL(image)}
                         alt={`Exterier ${index + 1}`}
                         className="w-full h-full object-cover rounded-md"
                       />
+                      <button
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-md p-2 hover:bg-red-600 transition duration-300 active:bg-red-700"
+                        onClick={() => {
+                          const updatedImages = gallery.filter(
+                            (_, i) => i !== index
+                          );
+                          setGallery(updatedImages);
+                        }}
+                      >
+                        <TrashIcon className="w-6 h-6" />
+                      </button>
                     </div>
                   ))}
                 </div>
