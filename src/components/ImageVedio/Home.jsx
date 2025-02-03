@@ -9,14 +9,18 @@ import deleteBanners from "../../api/banner/deleteBanners";
 import BannerForm from "./BannerForm";
 import Loading from "../Loading";
 import BannerModel from "./BannerModel";
+import ConfirmationModal from "../ConfirmationModal";
 
 function Home() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isFormOpen, setFormOpen] = useState(false);
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [selectedImage, setSelectedImage] = useState(null);
+
+  // Confirmation state
+  const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [bannerToDelete, setBannerToDelete] = useState(null);
 
   const getBanners = async () => {
     setLoading(true);
@@ -33,12 +37,23 @@ function Home() {
     getBanners();
   };
 
-  const handleDeleteImage = async (id) => {
-    // Handle delete image logic
-    const res = await deleteBanners(id);
+  const handleDeleteImage = (id) => {
+    setBannerToDelete(id);
+    setConfirmDeleteOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    const res = await deleteBanners(bannerToDelete);
     if (res.code === 200) {
       getBanners();
     }
+    setConfirmDeleteOpen(false);
+    setBannerToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setConfirmDeleteOpen(false);
+    setBannerToDelete(null);
   };
 
   useEffect(() => {
@@ -46,7 +61,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="p-4 bg-white rounded-lg ">
+    <div className="p-4 bg-white rounded-lg">
       <div className="flex justify-between">
         <div className="">
           <span className="banner-header mt-5">Banner Images</span>
@@ -73,7 +88,7 @@ function Home() {
         </div>
       ) : (
         <div className="overflow-y-auto mt-2 h-screen pb-10">
-          <div className="grid  grid-cols-1 lg:grid-cols-2 gap-10 my-5 pb-[200px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-5 pb-[200px]">
             {banners.map((image, index) => (
               <div
                 className="w-full h-72 relative rounded-lg overflow-hidden images"
@@ -110,13 +125,20 @@ function Home() {
         </div>
       )}
 
-      {/* Modal */}
+      {/* Modal for editing */}
       {isModalOpen && (
         <BannerModel selectedImage={selectedImage} onclose={closeModal} />
       )}
 
-      {/* Modal */}
+      {/* Modal for uploading */}
       {isFormOpen && <BannerForm onclose={closeModal} />}
+
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
     </div>
   );
 }

@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
-
-import "./../CarDetail/detailform.css";
 import { useNavigate } from "react-router-dom";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Trash2Icon } from "lucide-react";
 import uploadBrandOverview from "../../api/brandoverview/uploadBrandOverview";
 import { toast } from "sonner";
+import "./../CarDetail/detailform.css";
 
 const brands = ["CHANGAN", "DEEPAL", "KAICHENG"];
 
@@ -24,7 +23,7 @@ const BrandOverviewForm = () => {
     }
     setExterier((prevImages) => [...prevImages, ...files]);
   };
-  console.log("car_exterier", car_exterier);
+  // console.log("car_exterier", car_exterier);
 
   const handleRemoveImage = (index) => {
     const updatedImages = [...car_exterier];

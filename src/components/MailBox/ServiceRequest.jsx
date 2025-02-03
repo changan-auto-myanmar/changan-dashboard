@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { LoaderPinwheelIcon, Trash2Icon } from "lucide-react";
 import getServices from "../../api/mailbox/getService";
 import DeleteService from "../../api/mailbox/deleteService";
+import ConfirmationModal from "../ConfirmationModal";
 
 function ServiceRequest() {
   const [mails, setMails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedMails, setSelectedMails] = useState([]); // For selected mail IDs
+  const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   const getMailsData = async () => {
     setLoading(true);
@@ -28,6 +30,7 @@ function ServiceRequest() {
       // console.log("Deleted");
       getMailsData();
       setSelectedMails([]);
+      setConfirmDeleteOpen(false);
     }
   };
 
@@ -59,8 +62,12 @@ function ServiceRequest() {
         </div>
         <div>
           <button
-            className="flex items-center gap-2 bg-danger p-2 text-white rounded-lg active:scale-95 hover:bg-white hover:text-danger border border-danger"
-            onClick={() => deleteSelectedMails()}
+            className={`flex items-center gap-2 bg-danger p-2 text-white rounded-lg ${
+              selectedMails.length === 0
+                ? "opacity-50 cursor-not-allowed"
+                : "active:scale-95 hover:bg-white hover:text-danger border border-danger"
+            }`}
+            onClick={() => setConfirmDeleteOpen(true)}
           >
             <Trash2Icon />
             <span className="font-bold">Delete</span>
@@ -141,6 +148,11 @@ function ServiceRequest() {
           </table>
         )}
       </div>
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onConfirm={() => deleteSelectedMails()}
+        onCancel={() => setConfirmDeleteOpen(false)}
+      />
     </div>
   );
 }

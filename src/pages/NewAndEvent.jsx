@@ -8,6 +8,7 @@ import getAllNew from "../api/new/getAllNew";
 import Loading from "../components/Loading";
 import { Trash2Icon } from "lucide-react";
 import deleteNew from "../api/new/deketeNew";
+import ConfirmationModal from "../components/ConfirmationModal";
 // import "swiper/swiper-bundle.min.css"; // Import Swiper styles
 
 const tabs = ["All", "News", "Events", "Promotions"];
@@ -19,6 +20,8 @@ const NewAndEvent = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterNew, setFilterNew] = useState([]);
+  const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [id, setId] = useState(null);
 
   const fetchNews = async () => {
     const res = await getAllNew();
@@ -30,11 +33,13 @@ const NewAndEvent = () => {
     setFilterNew(res.data.CSR);
   };
 
-  const deleteNewEvent = async (id) => {
+  const deleteNewEvent = async () => {
     const res = await deleteNew(id);
     // console.log(res);
     if (res.code === 200) {
       fetchNews();
+      setConfirmDeleteOpen(false);
+      setId(null);
     }
   };
 
@@ -114,7 +119,10 @@ const NewAndEvent = () => {
                                 <span className="tabs-btn">Edit</span>
                               </Link>
                               <button
-                                onClick={() => deleteNewEvent(newdata._id)}
+                                onClick={() => {
+                                  setConfirmDeleteOpen(true);
+                                  setId(newdata._id);
+                                }}
                                 className="py-3 px-3 rounded-2xl text-[14px] bg-red-200 text-red-500 flex items-center font-semibold rounded-md hover:scale-105 active:scale-95"
                               >
                                 <Trash2Icon className="" size={20} />
@@ -145,6 +153,12 @@ const NewAndEvent = () => {
           </div>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onConfirm={() => deleteNewEvent()}
+        onCancel={() => setConfirmDeleteOpen(false)}
+      />
     </div>
   );
 };

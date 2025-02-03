@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the CSS file
 import { CalendarIcon } from "lucide-react";
 import { toast } from "sonner";
+import ConfirmationModal from "../ConfirmationModal";
 const brands = ["News", "Events", "Promotions"];
 
 function NewDetail() {
@@ -24,6 +25,8 @@ function NewDetail() {
   const [title, setTitle] = useState("");
   const desc = useRef();
   const [date, setDate] = useState("");
+  const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [imageId, setimageId] = useState(null);
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
     if (exterier.length + files.length > 5) {
@@ -77,14 +80,17 @@ function NewDetail() {
     setExterier(res[0].images);
   };
 
-  const deleteimage = async (imageId) => {
+  const deleteimage = async () => {
     const data = {
       id,
       imageId,
     };
     const res = await deleteImage(data);
-    res.code === 200 &&
+    if (res.code === 200) {
       setExterier((prev) => prev.filter((item) => item._id !== imageId));
+      setimageId(null);
+      setConfirmDeleteOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -237,7 +243,10 @@ function NewDetail() {
                         />
                         <button
                           className="absolute top-0 right-0 bg-danger text-white m-2 p-2 rounded-sm shadow-lg"
-                          onClick={() => deleteimage(image._id)}
+                          onClick={() => {
+                            setConfirmDeleteOpen(true);
+                            setimageId(image._id);
+                          }}
                         >
                           <MdOutlineDeleteOutline size={20} />
                         </button>
@@ -273,6 +282,12 @@ function NewDetail() {
           </div>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onConfirm={() => deleteimage()}
+        onCancel={() => setConfirmDeleteOpen(false)}
+      />
     </div>
   );
 }

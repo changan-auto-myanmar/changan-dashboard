@@ -10,7 +10,8 @@ import { Trash2Icon } from "lucide-react";
 import getABrandOverview from "../../api/brandoverview/getABrandOverview";
 import updateBrandOverview from "../../api/brandoverview/updateBrandOverview";
 import deleteBrandOverview from "../../api/brandoverview/deletebrandOverview";
-import getBrandOverview from "../../api/brandoverview/getBrandOverview";
+import ConfirmationModal from "../ConfirmationModal";
+// import getBrandOverview from "../../api/brandoverview/getBrandOverview";
 
 const brands = ["CHANGAN", "DEEPAL", "KAICHENG"];
 
@@ -20,6 +21,8 @@ const BrandOverviewDetail = () => {
   const [car_brand, setSelectedBrand] = useState(null);
   const [car_exterier, setExterier] = useState([]);
   const [images, setImages] = useState([]);
+  const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   const gatBrandOverview = async () => {
     const res = await getABrandOverview(id);
@@ -48,17 +51,21 @@ const BrandOverviewDetail = () => {
     images.forEach((image) => {
       data.append("images", image);
     });
-    console.log("formData", data);
+    // console.log("formData", data);
 
     await updateBrandOverview({ id, data });
   };
 
-  const handleDeleteImage = async (imageId) => {
-    const res = await deleteBrandOverview({ id, imageId });
+  const handleDeleteImage = async () => {
+    console.log(deleteId);
+    const res = await deleteBrandOverview({ id, deleteId });
     console.log("res", res);
     if (res.code === 200) {
-      console.log("work");
+      // console.log("work");
       setExterier(res.data.brandOverview?.images);
+      navigate("/home/image-vedio");
+      setConfirmDeleteOpen(false);
+      setDeleteId(null);
     }
   };
 
@@ -110,7 +117,8 @@ const BrandOverviewDetail = () => {
                   type="checkbox"
                   checked={car_brand === brand}
                   className="checkbox"
-                  onChange={() => setSelectedBrand(brand)}
+                  // onChange={() => setSelectedBrand(brand)}
+                  readOnly
                 />
                 <label className="font-medium">{brand}</label>
               </div>
@@ -148,40 +156,45 @@ const BrandOverviewDetail = () => {
                   </label>
                 </div>
               </div>
-              {car_exterier && car_exterier.length > 0 && (
-                <div className="flex flex-wrap gap-4 mt-4 ">
-                  {car_exterier.map((image, index) => (
+
+              <div className="flex flex-wrap gap-4 mt-4 ">
+                {car_exterier.length > 0 &&
+                  car_exterier.map((image, index) => (
                     <div key={index} className="w-[230px] h-[230px] relative">
                       <img
-                        src={`https://changan-automobile.onrender.com/api/v1/${image.filepath}`}
+                        src={`${import.meta.env.VITE_API_URL}api/v1/${
+                          image.filepath
+                        }`}
                         alt={`Exterier ${index + 1}`}
                         className="w-full h-full object-cover rounded-md"
                       />
                       <button
                         className="absolute top-2 right-2 bg-danger text-white p-2 rounded-md hover:text-red-700"
-                        onClick={() => handleDeleteImage(image._id)}
+                        onClick={() => {
+                          setConfirmDeleteOpen(true);
+                          setDeleteId(image._id);
+                        }}
                       >
                         <Trash2Icon size={20} />
                       </button>
                     </div>
                   ))}
-                  {images.map((image, index) => (
-                    <div key={index} className="w-[230px] h-[230px] relative">
-                      <img
-                        src={URL.createObjectURL(image)}
-                        alt={`Exterier ${index + 1}`}
-                        className="w-full h-full object-cover rounded-md"
-                      />
-                      <button
-                        className="absolute top-2 right-2 bg-danger text-white p-2 rounded-md hover:text-red-700"
-                        onClick={() => handleRemoveImage(index)}
-                      >
-                        <Trash2Icon size={20} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
+                {images.map((image, index) => (
+                  <div key={index} className="w-[230px] h-[230px] relative">
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt={`Exterier ${index + 1}`}
+                      className="w-full h-full object-cover rounded-md"
+                    />
+                    <button
+                      className="absolute top-2 right-2 bg-danger text-white p-2 rounded-md hover:text-red-700"
+                      onClick={() => handleRemoveImage(index)}
+                    >
+                      <Trash2Icon size={20} />
+                    </button>
+                  </div>
+                ))}
+              </div>
 
               <p className="text-sm text-gray-600 mt-5">
                 Please upload image with file size less than 10MB.
@@ -190,6 +203,13 @@ const BrandOverviewDetail = () => {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onConfirm={handleDeleteImage}
+        onCancel={() => setConfirmDeleteOpen(false)}
+      />
     </div>
   );
 };

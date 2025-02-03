@@ -8,6 +8,7 @@ import deleteYoutube from "../../api/banner/deleteYoutube";
 // component
 import Loading from "../Loading";
 import YoutubeForm from "./YouTubeForm";
+import ConfirmationModal from "../ConfirmationModal";
 
 function Youtube() {
   const [isFormOpen, setFormOpen] = useState(false);
@@ -15,6 +16,8 @@ function Youtube() {
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
   const [id, setId] = useState(null);
+  const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  // const [deleteId, setDeleteId] = useState(null);
 
   const getyoutube = async () => {
     setLoading(true);
@@ -35,6 +38,8 @@ function Youtube() {
     if (res.code === 200) {
       getyoutube();
       setShow(false);
+      setConfirmDeleteOpen(false);
+      setId(null);
     }
   };
 
@@ -57,7 +62,10 @@ function Youtube() {
               <IoIosCloseCircleOutline size={20} className="mr-2" />
               <p>Cancel</p>
             </button>
-            <button className="delete" onClick={() => handleDeleteImage()}>
+            <button
+              className="delete"
+              onClick={() => setConfirmDeleteOpen(true)}
+            >
               <Trash2Icon size={20} className="mr-2" />
               <p>Delete Video</p>
             </button>
@@ -114,6 +122,13 @@ function Youtube() {
 
       {/* Modal */}
       {isFormOpen && <YoutubeForm onclose={closeModal} />}
+
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onConfirm={handleDeleteImage}
+        onCancel={() => setConfirmDeleteOpen(false)}
+      />
     </div>
   );
 }

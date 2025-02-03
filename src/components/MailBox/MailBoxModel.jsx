@@ -1,9 +1,7 @@
-// import React from 'react'
-
 import DateFormatter from "../FormatDate";
 
 function MailBoxModel({ onClose, data }) {
-  console.log(data);
+  // console.log(data);
   return (
     <div className="bg-white shadow-md rounded-lg p-6 w-[700px] h-80 mx-auto mt-10">
       <div className="flex justify-between items-center mb-5">

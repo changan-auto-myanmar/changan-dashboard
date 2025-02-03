@@ -1,4 +1,4 @@
-import { Trash2Icon } from "lucide-react";
+import { CrossIcon, Trash2Icon } from "lucide-react";
 // import React from 'react'
 import { IoCheckmarkSharp } from "react-icons/io5";
 import editBanner from "../../api/banner/editbanner";
@@ -33,7 +33,7 @@ function BannerModel({ selectedImage, onclose }) {
       onclose();
     }
   };
-  console.log(selectedImage);
+  // console.log(selectedImage);
   return (
     <div>
       <div
@@ -64,7 +64,9 @@ function BannerModel({ selectedImage, onclose }) {
               </div>
               {!uploadedImage && (
                 <img
-                  src={`https://changan-automobile.onrender.com/api/v1/${selectedImage.filepath}`}
+                  src={`${import.meta.env.VITE_API_URL}api/v1/${
+                    selectedImage.filepath
+                  }`}
                   alt="Selected"
                   className="w-full h-full rounded-md object-cover mb-2"
                 />
@@ -85,10 +87,11 @@ function BannerModel({ selectedImage, onclose }) {
           <div className="flex justify-center space-x-4">
             <button
               className="delete"
-              onClick={() => handleDeleteImage(selectedImage._id)}
+              onClick={() => onclose()}
+              // onClick={() => handleDeleteImage(selectedImage._id)}
             >
-              <Trash2Icon size={20} className="mr-2" />
-              Delete Image
+              {/* <Cancel size={20} className="mr-2" /> */}
+              Cancel
             </button>
             <button
               className="upload"

@@ -1,12 +1,12 @@
 import { toast } from "sonner";
 import axios from "./../../axios";
 
-const deleteBrandOverview = async ({ id, imageId }) => {
+const deleteBrandOverview = async ({ id, deleteId }) => {
   //   console.log("data", data);
   const toastId = toast.loading("Deleteing...");
   try {
     const response = await axios.delete(
-      `api/v1/car-overview/${id}/image/${imageId}`
+      `api/v1/car-overview/${id}/image/${deleteId}`
     );
     toast.success("Delete successfully!", {
       id: toastId,

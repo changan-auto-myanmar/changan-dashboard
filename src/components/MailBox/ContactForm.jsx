@@ -4,6 +4,7 @@ import { LoaderPinwheelIcon, Trash2Icon } from "lucide-react";
 import DateFormatter from "../FormatDate";
 import MailBoxModel from "./MailBoxModel";
 import DeleteMails from "../../api/mailbox/deleteMails";
+import ConfirmationModal from "../ConfirmationModal";
 
 function ContactForm() {
   const [mails, setMails] = useState([]);
@@ -11,6 +12,7 @@ function ContactForm() {
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
   const [selectedMails, setSelectedMails] = useState([]); // For selected mail _IDs
+  const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   const getMailsData = async () => {
     setLoading(true);
@@ -61,8 +63,13 @@ function ContactForm() {
         </div>
         <div>
           <button
-            className="flex items-center gap-2 bg-danger p-2 text-white rounded-lg active:scale-95 hover:bg-white hover:text-danger border border-danger"
-            onClick={() => deletemails()}
+            className={`flex items-center gap-2 bg-danger p-2 text-white rounded-lg ${
+              selectedMails.length === 0
+                ? "opacity-50 cursor-not-allowed"
+                : "active:scale-95 hover:bg-white hover:text-danger border border-danger"
+            }`}
+            disabled={selectedMails.length === 0}
+            onClick={() => setConfirmDeleteOpen(true)}
           >
             <Trash2Icon />
             <span className="font-bold">Delete</span>
@@ -160,6 +167,11 @@ function ContactForm() {
           </table>
         )}
       </div>
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onConfirm={() => deletemails()}
+        onCancel={() => setConfirmDeleteOpen(false)}
+      />
     </div>
   );
 }
