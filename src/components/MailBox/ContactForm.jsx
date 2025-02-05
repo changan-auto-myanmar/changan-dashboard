@@ -47,6 +47,7 @@ function ContactForm() {
     if (res.code === 200) {
       getMailsData();
       setSelectedMails([]);
+      setConfirmDeleteOpen(false);
     }
   };
 
