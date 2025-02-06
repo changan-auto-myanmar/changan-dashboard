@@ -5,7 +5,7 @@ const getABrandOverview = async (id) => {
     const response = await axios.get(`api/v1/car-overview/${id}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

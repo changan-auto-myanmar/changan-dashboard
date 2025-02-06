@@ -12,7 +12,7 @@ function BrandOverview() {
 
   const getAllBrandOverview = async () => {
     const res = await getBrandOverview();
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
       setLoading(false);
       setBrands(res.data.brandOverview);

@@ -41,12 +41,12 @@ function NewForm() {
       formData.append("images", image);
     });
 
-    console.log("data", formData);
+    // console.log("data", formData);
     const res = await constentUpload(formData);
     if (res.code === 200) {
       navigate("/home/new");
     }
-    console.log("res", res);
+    // console.log("res", res);
   };
   return (
     <div>

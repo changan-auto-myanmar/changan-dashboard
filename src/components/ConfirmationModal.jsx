@@ -1,16 +1,20 @@
 import { Trash2Icon } from "lucide-react";
-import React from "react";
+// import React from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const ConfirmationModal = ({ isOpen, onConfirm, onCancel }) => {
+const ConfirmationModal = ({ isOpen, onConfirm, onCancel, text }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg py-4 px-10 shadow-md border border-gray-300 absolute bottom-5 right-5">
-        <h2 className="text-xl font-semibold mb-4 text-center ">
-          Delete images Cannot <br /> be recovered!
-        </h2>
+        {text ? (
+          <h2 className="text-xl font-semibold mb-4 text-center ">{text}</h2>
+        ) : (
+          <h2 className="text-xl font-semibold mb-4 text-center ">
+            Delete images Cannot <br /> be recovered!
+          </h2>
+        )}
         {/* <p>Are you sure you want to delete this item?</p> */}
         <div className="flex justify-center mt-4 gap-4">
           <button

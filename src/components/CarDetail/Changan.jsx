@@ -1,10 +1,14 @@
-import { MdOutlineEdit } from "react-icons/md";
+import { MdOutlineDelete } from "react-icons/md";
 import Loading from "../Loading";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Changan({ data, loading, activeTab }) {
-  // console.log(loading);
-  // console.log(data);
+function Changan({ data, loading, activeTab, sentdeteleId }) {
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    sentdeteleId(id); // Call the function passed from the parent
+  };
+
   return (
     <div className="p-4 bg-white rounded-lg">
       <div className="flex items-center">
@@ -32,16 +36,28 @@ function Changan({ data, loading, activeTab }) {
                   <div
                     className="w-full h-auto rounded-lg overflow-hidden cursor-pointer bg-gray-100"
                     key={index}
+                    onClick={() => {
+                      navigate(`/home/car-detail/${image._id}`);
+                    }}
                   >
                     <div className="relative">
-                      <div className="absolute top-0 right-0 p-2 z-10">
-                        <Link
+                      <div className="absolute flex gap-2 top-0 right-0 p-2 z-10">
+                        {/* <Link
                           to={`/home/car-detail/${image._id}`}
                           className="py-3 px-3 rounded-2xl text-[14px] bg-secondary text-primary flex items-center font-semibold rounded-md hover:scale-105 active:scale-95"
                         >
                           <MdOutlineEdit className="mr-2" size={20} />
                           <span className="tabs-btn">Edit</span>
-                        </Link>
+                        </Link> */}
+                        <button
+                          className="py-3 px-3 rounded-2xl text-[14px] bg-red-500 text-white flex items-center font-semibold rounded-md hover:scale-105 active:scale-95"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleClick(image._id);
+                          }}
+                        >
+                          <MdOutlineDelete className="" size={20} />
+                        </button>
                       </div>
                       <img
                         src={`${import.meta.env.VITE_API_URL}api/v1/${

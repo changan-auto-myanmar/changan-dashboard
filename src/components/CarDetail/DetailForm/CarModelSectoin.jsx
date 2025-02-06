@@ -6,7 +6,7 @@ import { setCarData, selectCarData } from "./../../../redux/carSlice";
 import { toast } from "sonner";
 // import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const brands = ["CHANGAN", "DEEPAL", "KAICHEN"];
+const brands = ["CHANGAN", "DEEPAL", "KAICHENG"];
 
 function CarModelSectoin({ gotonext }) {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function CarModelSectoin({ gotonext }) {
   const [car_banner, setCarBanner] = useState(carData?.car_banner);
   const [car_porche, setCarPorche] = useState(carData?.car_porche);
 
-  console.log("carData", carData);
+  // console.log("carData", carData);
 
   const handleState = () => {
     const data = {

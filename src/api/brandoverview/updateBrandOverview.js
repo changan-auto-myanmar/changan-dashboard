@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import axios from "./../../axios";
 
 const updateBrandOverview = async ({ id, data }) => {
-  console.log("data", data);
+  // console.log("data", data);
   const toastId = toast.loading("Uploading...");
   try {
     const response = await axios.post(`api/v1/car-overview/${id}`, data, {

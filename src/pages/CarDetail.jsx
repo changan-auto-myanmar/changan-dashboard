@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import getAllCarDetail from "../api/cardetail/getAllCarDetail";
 
 import "swiper/css";
+import deleteCarDetail from "../api/cardetail/deletecarDetail";
+import ConfirmationModal from "../components/ConfirmationModal";
 
 const tabs = ["CHANGAN", "DEEPAL", "KAICHEN"];
 
@@ -15,10 +17,8 @@ const CarDetail = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [CarDetailData, setCarDetailData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // console.log(activeTab);
-
-  // console.log(CarDetailData);
+  const [deleteId, setDeleteId] = useState(null);
+  const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   const getCarData = async (tab) => {
     setLoading(true);
@@ -36,6 +36,16 @@ const CarDetail = () => {
   const brandFilter = (tab) => {
     setActiveTab(tab);
     getCarData(tab);
+  };
+
+  const deleteCar = async (id) => {
+    // console.log(id);
+    const res = await deleteCarDetail(id);
+    if (res.code === 200) {
+      getCarData(activeTab);
+      setDeleteId(null);
+      setConfirmDeleteOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -80,8 +90,22 @@ const CarDetail = () => {
         </div>
 
         {/* Car Detail Content */}
-        <Changan data={CarDetailData} loading={loading} activeTab={activeTab} />
+        <Changan
+          data={CarDetailData}
+          loading={loading}
+          activeTab={activeTab}
+          sentdeteleId={(id) => {
+            setDeleteId(id);
+            setConfirmDeleteOpen(true);
+          }}
+        />
       </div>
+
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onConfirm={() => deleteCar(deleteId)}
+        onCancel={() => setConfirmDeleteOpen(false)}
+      />
     </div>
   );
 };

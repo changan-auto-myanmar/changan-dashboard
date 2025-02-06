@@ -26,7 +26,7 @@ const BrandOverviewDetail = () => {
 
   const gatBrandOverview = async () => {
     const res = await getABrandOverview(id);
-    console.log("res", res);
+    // console.log("res", res);
     if (res.code === 200) {
       setSelectedBrand(res.data.brandOverview?.car_brand);
       setExterier(res.data.brandOverview?.images);
@@ -47,7 +47,7 @@ const BrandOverviewDetail = () => {
 
   const handleUpload = async () => {
     const data = new FormData();
-    console.log("images", images);
+    // console.log("images", images);
     images.forEach((image) => {
       data.append("images", image);
     });
@@ -57,9 +57,9 @@ const BrandOverviewDetail = () => {
   };
 
   const handleDeleteImage = async () => {
-    console.log(deleteId);
+    // console.log(deleteId);
     const res = await deleteBrandOverview({ id, deleteId });
-    console.log("res", res);
+    // console.log("res", res);
     if (res.code === 200) {
       // console.log("work");
       setExterier(res.data.brandOverview?.images);

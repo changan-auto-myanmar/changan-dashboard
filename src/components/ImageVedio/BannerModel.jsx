@@ -28,7 +28,7 @@ function BannerModel({ selectedImage, onclose }) {
     };
     // Handle upload image logic
     const res = await editBanner({ id, data });
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
       onclose();
     }

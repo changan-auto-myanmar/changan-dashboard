@@ -13,7 +13,7 @@ const tabs = ["Car Model", "Image", "Color"];
 const DetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log("id", id);
+  // console.log("id", id);
   const [childFunction, setChildFunction] = useState(null);
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [CarModelSectoinData, SetCarModelSectoin] = useState([]);
@@ -23,7 +23,7 @@ const DetailPage = () => {
 
   const getAData = async () => {
     const res = await getACarDetail(id);
-    console.log("carDetail", res);
+    // console.log("carDetail", res);
     if (res.code === 200) {
       const dataone = [
         {

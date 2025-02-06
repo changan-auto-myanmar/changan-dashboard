@@ -19,7 +19,7 @@ function BannerForm({ onclose }) {
     };
     // Handle upload image logic
     const res = await uploadBanners(data);
-    console.log(res);
+    // console.log(res);
     if (res.code === 201) {
       onclose();
     }

@@ -14,7 +14,7 @@ function YoutubeForm({ onclose }) {
     };
     // Handle upload image logic
     const res = await uploadYouTube(data);
-    console.log(res);
+    // console.log(res);
     if (res.code === 201) {
       onclose();
     }

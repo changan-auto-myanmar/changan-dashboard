@@ -59,7 +59,7 @@ function CarColorSection() {
     // console.log("formData", formData.values);
 
     const res = await uploadcarDetail(formData);
-    console.log("res", res);
+    // console.log("res", res);
     if (res.code === 201) {
       dispatch(removeCarData());
       navigate("/home/car-detail");

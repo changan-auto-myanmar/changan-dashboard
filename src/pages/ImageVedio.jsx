@@ -5,7 +5,7 @@ import Youtube from "../components/ImageVedio/Youtube";
 import BrandOverview from "../components/ImageVedio/BrandOverview";
 import "swiper/css";
 
-const tabs = ["Car Models", "Home", "Videos"];
+const tabs = ["Car Models", "Banner", "Videos"];
 
 const ImageVedio = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);

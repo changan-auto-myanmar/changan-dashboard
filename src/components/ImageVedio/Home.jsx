@@ -116,6 +116,7 @@ function Home() {
                   src={`${import.meta.env.VITE_API_URL}api/v1/${
                     image.filepath
                   }`}
+                  loading="lazy"
                   alt="img"
                   className="w-full h-72 object-cover"
                 />

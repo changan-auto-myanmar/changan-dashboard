@@ -14,7 +14,7 @@ function Youtube() {
   const [isFormOpen, setFormOpen] = useState(false);
   const [youtube, setYoutube] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   const [id, setId] = useState(null);
   const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   // const [deleteId, setDeleteId] = useState(null);
@@ -37,7 +37,7 @@ function Youtube() {
     const res = await deleteYoutube(id);
     if (res.code === 200) {
       getyoutube();
-      setShow(false);
+      // setShow(false);
       setConfirmDeleteOpen(false);
       setId(null);
     }
@@ -56,40 +56,21 @@ function Youtube() {
             {youtube.length}/<span className="text-gray-500">4</span>
           </span>
         </div>
-        {show === true ? (
-          <div className="flex items-center space-x-4">
-            <button className="cancel" onClick={() => setShow(false)}>
-              <IoIosCloseCircleOutline size={20} className="mr-2" />
-              <p>Cancel</p>
-            </button>
-            <button
-              className="delete"
-              onClick={() => setConfirmDeleteOpen(true)}
-            >
-              <Trash2Icon size={20} className="mr-2" />
-              <p>Delete Video</p>
-            </button>
-          </div>
-        ) : (
-          <div className="flex items-center space-x-4">
-            <button className="delete" onClick={() => setShow(true)}>
-              <Trash2Icon size={20} className="mr-2" />
-              <p>Delete Video</p>
-            </button>
-            <button
-              onClick={() => setFormOpen(true)}
-              className={`flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95 ${
-                youtube.length >= 4
-                  ? "cursor-not-allowed opacity-50"
-                  : "cursor-pointer"
-              }`}
-              disabled={youtube.length >= 4}
-            >
-              <MdDriveFolderUpload className="mr-2" size={20} />
-              <span className="tabs-btn">Upload Youtube Link</span>
-            </button>
-          </div>
-        )}
+
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={() => setFormOpen(true)}
+            className={`flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95 ${
+              youtube.length >= 4
+                ? "cursor-not-allowed opacity-50"
+                : "cursor-pointer"
+            }`}
+            disabled={youtube.length >= 4}
+          >
+            <MdDriveFolderUpload className="mr-2" size={20} />
+            <span className="tabs-btn">Upload Youtube Link</span>
+          </button>
+        </div>
       </div>
       {loading ? (
         <div className="flex justify-center items-center h-[350px]">
@@ -108,12 +89,16 @@ function Youtube() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
-                {show && (
-                  <div className="absolute bottom-0 m-2 left-0 w-5 h-5 gap-4 flex items-center justify-center w-[100px] h-[50px] bg-white border border-primary rounded-md cursor-pointer text-primary">
-                    <input type="checkbox" onChange={() => setId(video._id)} />
-                    <p>Select</p>
-                  </div>
-                )}
+                <div
+                  className="absolute bottom-0 m-2 p-2 right-0 gap-2 flex items-center justify-center bg-red-500 rounded-md cursor-pointer text-white hover:bg-red-600 active:scale-95"
+                  onClick={() => {
+                    setId(video._id);
+                    setConfirmDeleteOpen(true);
+                  }}
+                >
+                  <Trash2Icon />
+                  <p>Remove</p>
+                </div>
               </div>
             ))}
           </div>
@@ -127,6 +112,7 @@ function Youtube() {
       <ConfirmationModal
         isOpen={isConfirmDeleteOpen}
         onConfirm={handleDeleteImage}
+        text="remove this youtube vedio?"
         onCancel={() => setConfirmDeleteOpen(false)}
       />
     </div>

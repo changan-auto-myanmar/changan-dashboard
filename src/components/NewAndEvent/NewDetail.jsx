@@ -65,14 +65,14 @@ function NewDetail() {
     const res = await editUploadContent({ id, data });
     // console.log("res", res);
     if (res.status === "success") {
-      console.log("work");
+      // console.log("work");
       navigate("/home/new");
     }
   };
 
   const getanew = async () => {
     const res = await getANew(id);
-    console.log("res", res[0].eventDate);
+    // console.log("res", res[0].eventDate);
     setTitle(res[0].title);
     setCategory(res[0].category);
     setDate(res[0].eventDate);

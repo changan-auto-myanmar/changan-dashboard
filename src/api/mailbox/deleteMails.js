@@ -17,7 +17,7 @@ const DeleteMails = async (data) => {
       id: toastId,
       autoClose: 500, // Auto-close the toast after 5 seconds
     });
-    console.log(error);
+    // console.log(error);
   }
 };
 

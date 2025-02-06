@@ -5,7 +5,7 @@ const getAllBanner = async () => {
     const response = await axios.get("api/v1/banners/public");
     return response.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
