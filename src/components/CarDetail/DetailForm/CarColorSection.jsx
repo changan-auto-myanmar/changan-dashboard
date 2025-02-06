@@ -27,7 +27,7 @@ function CarColorSection() {
     setcarColorImage(null);
   };
 
-  console.log("carColorData", carColorData);
+  // console.log("carColorData", carColorData);
 
   const carDetailUpload = async () => {
     const formData = new FormData();
@@ -42,10 +42,10 @@ function CarColorSection() {
     formData.append("car_banner", carData.car_banner);
     formData.append("car_porche", carData.car_porche);
     carData?.car_exterior.forEach((item) => {
-      formData.append("car_exterier", item);
+      formData.append("car_exterior", item);
     });
     carData?.car_interior.forEach((item) => {
-      formData.append("car_interier", item);
+      formData.append("car_interior", item);
     });
     carData?.gallery.forEach((item) => {
       formData.append("gallery", item);
@@ -108,8 +108,19 @@ function CarColorSection() {
           <p className="banner-header">Color Name</p>
           <div className="flex justify-center space-x-4">
             <button
-              className="flex items-center border border-primary bg-white text-primary text-[12px] semibold rounded-md px-7 py-2"
+              className={`flex items-center border border-primary bg-white text-primary text-[12px] semibold rounded-md px-7 py-2 ${
+                colorName === "" ||
+                colorImage === null ||
+                carColorImage === null
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
               onClick={addColorData}
+              disabled={
+                colorName === "" ||
+                colorImage === null ||
+                carColorImage === null
+              }
             >
               <MdAddCircleOutline className="mr-2" size={20} />
               <span>Add Color</span>
