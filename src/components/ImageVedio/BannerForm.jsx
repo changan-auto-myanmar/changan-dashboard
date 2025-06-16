@@ -15,7 +15,7 @@ function BannerForm({ onclose }) {
 
   const handleUploadImage = async () => {
     const data = {
-      image: selectedImage,
+      url: selectedImage,
     };
     // Handle upload image logic
     const res = await uploadBanners(data);

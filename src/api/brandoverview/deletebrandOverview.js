@@ -6,7 +6,12 @@ const deleteBrandOverview = async ({ id, deleteId }) => {
   const toastId = toast.loading("Deleteing...");
   try {
     const response = await axios.delete(
-      `api/v1/car-overview/${id}/image/${deleteId}`
+      `api/v1/car-overview/delete-images/${id}`,
+      {
+        data: {
+          imageId: deleteId,
+        },
+      }
     );
     toast.success("Delete successfully!", {
       id: toastId,

@@ -12,12 +12,14 @@ function BrandOverview() {
 
   const getAllBrandOverview = async () => {
     const res = await getBrandOverview();
-    // console.log(res);
+    // console.log("res", res);
     if (res.code === 200) {
       setLoading(false);
       setBrands(res.data.brandOverview);
     }
   };
+
+  // console.log("brands", brands);
 
   useEffect(() => {
     getAllBrandOverview();
@@ -30,18 +32,20 @@ function BrandOverview() {
           <div className="">
             <span className="banner-header mt-5">Brand Overview Images</span>
             <span className="font-semibold text-[16px] ms-5">
-              {brands.length}/<span className="text-gray-500">5</span>
+              {brands.length}/<span className="text-gray-500">3</span>
             </span>
           </div>
           <Link
             to="overview/form"
-            className={`flex items-center bg-primary text-white px-4 py-3 rounded-md active:scale-95 ${
-              brands.length >= 5 ? "pointer-events-none opacity-50" : ""
+            className={`bg-primary flex justify-center items-center text-white px-5 h-[40px] rounded-md active:scale-95 ${
+              brands.length >= 3 ? "pointer-events-none opacity-50" : ""
             }`}
-            disabled={brands.length >= 5}
+            disabled={brands.length >= 3}
           >
-            <MdDriveFolderUpload className="mr-2" size={20} />
-            <span className="tabs-btn">Upload Image</span>
+            <div className="flex items-center gap-2">
+              <MdDriveFolderUpload size={20} />
+              <span className="tabs-btn hidden lg:block">Upload Image</span>
+            </div>
           </Link>
         </div>
         {loading && (
@@ -58,7 +62,7 @@ function BrandOverview() {
             )}
             {brands.length > 0 && (
               <div className="overflow-y-auto mt-2 h-screen">
-                <div className="grid grid-cols-2 gap-10 my-5 pb-[200px]">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-5 pb-[200px]">
                   {brands.map((brand, index) => (
                     <div
                       className="w-full h-auto rounded-lg overflow-hidden p-2 cursor-pointer bg-gray-100"
@@ -67,18 +71,16 @@ function BrandOverview() {
                       <div className="relative">
                         <div className="absolute top-0 right-0 p-2 z-10">
                           <Link
-                            to={`overview/detail/${brand._id}`}
+                            to={`overview/detail/${brand.car_brand}`}
                             className="py-3 px-3 rounded-2xl text-[14px] bg-secondary text-primary flex items-center font-semibold rounded-md hover:scale-105 active:scale-95"
                           >
                             <MdOutlineEdit className="mr-2" size={20} />
                             <span className="tabs-btn">Edit</span>
                           </Link>
                         </div>
-                        {brand.images.length > 0 && (
+                        {brand.brandImageUrls.length > 0 && (
                           <img
-                            src={`${import.meta.env.VITE_API_URL}api/v1/${
-                              brand?.images[0].filepath
-                            }`}
+                            src={`${brand.brandImageUrls[0].url}`}
                             alt="img"
                             className="w-full h-72 object-cover rounded-md"
                           />

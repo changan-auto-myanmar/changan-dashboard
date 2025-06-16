@@ -5,11 +5,15 @@ const updateBrandOverview = async ({ id, data }) => {
   // console.log("data", data);
   const toastId = toast.loading("Uploading...");
   try {
-    const response = await axios.post(`api/v1/car-overview/${id}`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post(
+      `api/v1/car-overview/add-images/${id}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     toast.success("Uploaded successfully!", {
       id: toastId,
       autoClose: 500, // Auto-close the toast after 5 seconds

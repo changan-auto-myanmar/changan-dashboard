@@ -4,7 +4,7 @@ import { BiArrowBack } from "react-icons/bi";
 import "./../CarDetail/detailform.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { MdDriveFolderUpload } from "react-icons/md";
-import { IoIosCloseCircleOutline } from "react-icons/io";
+// import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Trash2Icon } from "lucide-react";
 // import uploadBrandOverview from "../../api/brandoverview/uploadBrandOverview";
 import getABrandOverview from "../../api/brandoverview/getABrandOverview";
@@ -19,17 +19,17 @@ const BrandOverviewDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [car_brand, setSelectedBrand] = useState(null);
-  const [car_exterier, setExterier] = useState([]);
+  const [brand_img, setBrandImg] = useState([]);
   const [images, setImages] = useState([]);
   const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
   const gatBrandOverview = async () => {
     const res = await getABrandOverview(id);
-    // console.log("res", res);
+
     if (res.code === 200) {
       setSelectedBrand(res.data.brandOverview?.car_brand);
-      setExterier(res.data.brandOverview?.images);
+      setBrandImg(res.data.brandOverview?.brandImageUrls);
     }
   };
 
@@ -37,33 +37,30 @@ const BrandOverviewDetail = () => {
     const files = Array.from(event.target.files);
     setImages((prevImages) => [...prevImages, ...files]);
   };
-  //   console.log("car_exterier", car_exterier);
 
   const handleRemoveImage = (index) => {
-    const updatedImages = [...car_exterier];
+    const updatedImages = [...images];
     updatedImages.splice(index, 1);
     setImages(updatedImages);
   };
 
   const handleUpload = async () => {
     const data = new FormData();
-    // console.log("images", images);
     images.forEach((image) => {
-      data.append("images", image);
+      data.append("brandImageUrls", image);
     });
-    // console.log("formData", data);
 
-    await updateBrandOverview({ id, data });
+    const res = await updateBrandOverview({ id, data });
+    if (res.code === 200) {
+      setImages([]);
+      gatBrandOverview();
+    }
   };
 
   const handleDeleteImage = async () => {
-    // console.log(deleteId);
     const res = await deleteBrandOverview({ id, deleteId });
-    // console.log("res", res);
     if (res.code === 200) {
-      // console.log("work");
-      setExterier(res.data.brandOverview?.images);
-      navigate("/home/image-vedio");
+      gatBrandOverview();
       setConfirmDeleteOpen(false);
       setDeleteId(null);
     }
@@ -91,21 +88,23 @@ const BrandOverviewDetail = () => {
         <div className="flex justify-between items-center">
           <p className="banner-header mb-5">Car Brand</p>
           <div className="flex gap-4">
-            <button
+            {/* <button
               className="cancel"
               onClick={() => {
                 setSelectedBrand(null);
-                setExterier([]);
+                setBrandImg([]);
               }}
               // onClick={() => setFormOpen(false)}
             >
               <IoIosCloseCircleOutline size={20} className="mr-2" />
               Cancel
-            </button>
-            <button className="upload" onClick={handleUpload}>
-              <MdDriveFolderUpload className="mr-2" size={20} />
-              Update
-            </button>
+            </button> */}
+            {images.length > 0 && (
+              <button className="upload" onClick={handleUpload}>
+                <MdDriveFolderUpload className="mr-2" size={20} />
+                Update
+              </button>
+            )}
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -136,7 +135,7 @@ const BrandOverviewDetail = () => {
                   <label htmlFor="file-upload" className="cursor-pointer">
                     <span
                       className={`bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300 ${
-                        car_exterier.length == 8
+                        brand_img.length == 8
                           ? "opacity-50 cursor-not-allowed"
                           : "opacity-100 cursor-pointer"
                       }`}
@@ -149,7 +148,7 @@ const BrandOverviewDetail = () => {
                       type="file"
                       accept="image/*"
                       multiple
-                      disabled={car_exterier.length == 8}
+                      disabled={brand_img.length == 8}
                       onChange={handleImageChange}
                       className="hidden"
                     />
@@ -158,18 +157,16 @@ const BrandOverviewDetail = () => {
               </div>
 
               <div className="flex flex-wrap gap-4 mt-4 ">
-                {car_exterier.length > 0 &&
-                  car_exterier.map((image, index) => (
+                {brand_img.length > 0 &&
+                  brand_img.map((image, index) => (
                     <div key={index} className="w-[230px] h-[230px] relative">
                       <img
-                        src={`${import.meta.env.VITE_API_URL}api/v1/${
-                          image.filepath
-                        }`}
+                        src={image.url}
                         alt={`Exterier ${index + 1}`}
                         className="w-full h-full object-cover rounded-md"
                       />
                       <button
-                        className="absolute top-2 right-2 bg-danger text-white p-2 rounded-md hover:text-red-700"
+                        className="absolute top-2 right-2 bg-danger text-white p-2 rounded-md hover:scale-105"
                         onClick={() => {
                           setConfirmDeleteOpen(true);
                           setDeleteId(image._id);
@@ -179,21 +176,22 @@ const BrandOverviewDetail = () => {
                       </button>
                     </div>
                   ))}
-                {images.map((image, index) => (
-                  <div key={index} className="w-[230px] h-[230px] relative">
-                    <img
-                      src={URL.createObjectURL(image)}
-                      alt={`Exterier ${index + 1}`}
-                      className="w-full h-full object-cover rounded-md"
-                    />
-                    <button
-                      className="absolute top-2 right-2 bg-danger text-white p-2 rounded-md hover:text-red-700"
-                      onClick={() => handleRemoveImage(index)}
-                    >
-                      <Trash2Icon size={20} />
-                    </button>
-                  </div>
-                ))}
+                {images.length > 0 &&
+                  images.map((image, index) => (
+                    <div key={index} className="w-[230px] h-[230px] relative">
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt={`Exterier ${index + 1}`}
+                        className="w-full h-full object-cover rounded-md"
+                      />
+                      <button
+                        className="absolute top-2 right-2 bg-danger text-white p-2 rounded-md hover:scale-105"
+                        onClick={() => handleRemoveImage(index)}
+                      >
+                        <Trash2Icon size={20} />
+                      </button>
+                    </div>
+                  ))}
               </div>
 
               <p className="text-sm text-gray-600 mt-5">

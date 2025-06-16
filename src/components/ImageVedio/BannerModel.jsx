@@ -1,8 +1,6 @@
-import { CrossIcon, Trash2Icon } from "lucide-react";
 // import React from 'react'
 import { IoCheckmarkSharp } from "react-icons/io5";
 import editBanner from "../../api/banner/editbanner";
-import deleteBanners from "../../api/banner/deleteBanners";
 import { useState } from "react";
 import { AiOutlineUpload } from "react-icons/ai";
 
@@ -14,17 +12,9 @@ function BannerModel({ selectedImage, onclose }) {
     setUploadedImage(file);
   };
 
-  const handleDeleteImage = async (id) => {
-    // Handle delete image logic
-    const res = await deleteBanners(id);
-    if (res.code === 200) {
-      onclose();
-    }
-  };
-
   const handleUploadImage = async (id) => {
     const data = {
-      image: uploadedImage,
+      url: uploadedImage,
     };
     // Handle upload image logic
     const res = await editBanner({ id, data });
@@ -64,9 +54,7 @@ function BannerModel({ selectedImage, onclose }) {
               </div>
               {!uploadedImage && (
                 <img
-                  src={`${import.meta.env.VITE_API_URL}api/v1/${
-                    selectedImage.filepath
-                  }`}
+                  src={`${selectedImage.url}`}
                   alt="Selected"
                   className="w-full h-full rounded-md object-cover mb-2"
                 />
