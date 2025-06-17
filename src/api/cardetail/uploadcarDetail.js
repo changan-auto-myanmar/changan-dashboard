@@ -4,7 +4,7 @@ import axios from "./../../axios";
 const uploadcarDetail = async (data) => {
   const toastId = toast.loading("Uploading...");
   try {
-    const response = await axios.post("api/v1/showcase", data, {
+    const response = await axios.post("api/v1/changan-showcase", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

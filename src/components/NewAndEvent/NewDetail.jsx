@@ -8,7 +8,6 @@ import getANew from "../../api/new/getANew";
 import deleteImage from "../../api/new/deleteImage";
 import editUploadContent from "../../api/new/editUploadContent";
 import editUploadImage from "../../api/new/editUploadImage";
-import { format } from "date-fns";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the CSS file
 import { CalendarIcon } from "lucide-react";
@@ -27,6 +26,7 @@ function NewDetail() {
   const [date, setDate] = useState("");
   const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [imageId, setimageId] = useState(null);
+
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
     if (exterier.length + files.length > 5) {
@@ -52,7 +52,7 @@ function NewDetail() {
     if (images.length !== 0) {
       const formData = new FormData();
       images.forEach((image) => {
-        formData.append("images", image);
+        formData.append("csrImages", image);
       });
 
       const imgdata = {
@@ -72,12 +72,14 @@ function NewDetail() {
 
   const getanew = async () => {
     const res = await getANew(id);
-    // console.log("res", res[0].eventDate);
-    setTitle(res[0].title);
-    setCategory(res[0].category);
-    setDate(res[0].eventDate);
-    desc.current.value = res[0].body;
-    setExterier(res[0].images);
+    // console.log("res", res.data.csrContent);
+    if (res.code === 200) {
+      setTitle(res.data.csrContent.title);
+      setCategory(res.data.csrContent.category);
+      setDate(res.data.csrContent.eventDate);
+      desc.current.value = res.data.csrContent.textBody;
+      setExterier(res.data.csrContent.csrImages);
+    }
   };
 
   const deleteimage = async () => {
@@ -235,10 +237,8 @@ function NewDetail() {
                     exterier.map((image, index) => (
                       <div key={index} className="w-[230px] h-[230px] relative">
                         <img
-                          src={`${import.meta.env.VITE_API_URL}api/v1/${
-                            image.filepath
-                          }`}
-                          alt={`Exterier ${index + 1}`}
+                          src={image.url}
+                          alt={`New ${index + 1}`}
                           className="w-full h-full object-cover rounded-md"
                         />
                         <button

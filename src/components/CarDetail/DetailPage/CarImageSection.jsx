@@ -98,9 +98,7 @@ function CarImageSection({ carData, id }) {
                   {carData[0].car_exterior.map((image, index) => (
                     <div key={index} className="w-[230px] h-[230px]">
                       <img
-                        src={`${import.meta.env.VITE_API_URL}api/v1/${
-                          image?.filepath
-                        }`}
+                        src={`${image?.url}`}
                         alt={`Exterier ${index + 1}`}
                         className="w-full h-full object-cover rounded-md"
                       />
@@ -162,9 +160,7 @@ function CarImageSection({ carData, id }) {
                   {carData[0].car_interior.map((image, index) => (
                     <div key={index} className="w-[230px] h-[230px]">
                       <img
-                        src={`${import.meta.env.VITE_API_URL}api/v1/${
-                          image?.filepath
-                        }`}
+                        src={`${image?.url}`}
                         alt={`Interior ${index + 1}`}
                         className="w-full h-full object-cover rounded-md"
                       />
@@ -226,9 +222,7 @@ function CarImageSection({ carData, id }) {
                   {carData[0].gallery.map((image, index) => (
                     <div key={index} className="w-[230px] h-[230px]">
                       <img
-                        src={`${import.meta.env.VITE_API_URL}api/v1/${
-                          image.filepath
-                        }`}
+                        src={`${image?.url}`}
                         alt={`gallery ${index + 1}`}
                         className="w-full h-full object-cover rounded-md"
                       />

@@ -35,15 +35,16 @@ function NewForm() {
     const formData = new FormData();
     formData.append("category", category);
     formData.append("title", title);
-    formData.append("body", desc.current.value);
+    formData.append("textBody", desc.current.value);
     category !== "News" && formData.append("eventDate", date);
     exterier.forEach((image) => {
-      formData.append("images", image);
+      formData.append("csrImages", image);
     });
 
     // console.log("data", formData);
     const res = await constentUpload(formData);
-    if (res.code === 200) {
+    console.log("res", res);
+    if (res.code === 201) {
       navigate("/home/new");
     }
     // console.log("res", res);
@@ -82,12 +83,12 @@ function NewForm() {
           {/* buttton */}
           <div className="flex justify-center space-x-4">
             <button className="cancel" onClick={() => navigate("/home/new")}>
-              <IoIosCloseCircleOutline size={20} className="mr-2" />
-              Cancel
+              <IoIosCloseCircleOutline size={20} className="mr-0 lg:mr-2 " />
+              <span className="hidden lg:block">Cancel</span>
             </button>
             <button className="upload" onClick={uploadContent}>
-              <MdDriveFolderUpload className="mr-2" size={20} />
-              Upload Content
+              <MdDriveFolderUpload size={20} className="mr-0 lg:mr-2" />
+              <span className="hidden lg:block">Upload Content</span>
             </button>
           </div>
         </div>

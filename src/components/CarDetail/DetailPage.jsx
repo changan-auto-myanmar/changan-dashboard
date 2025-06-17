@@ -23,7 +23,7 @@ const DetailPage = () => {
 
   const getAData = async () => {
     const res = await getACarDetail(id);
-    // console.log("carDetail", res);
+    console.log("carDetail", res);
     if (res.code === 200) {
       const dataone = [
         {
@@ -32,7 +32,7 @@ const DetailPage = () => {
           car_slogan: res.data.showcase.car_slogan,
           car_banner: res.data.showcase.car_banner,
           mockup: res.data.showcase.mockup,
-          car_porche: res.data.showcase.car_porche,
+          car_porche: res.data.showcase.car_brochure,
         },
       ];
       const datatwo = [

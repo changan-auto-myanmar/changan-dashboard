@@ -25,14 +25,14 @@ function Home() {
   const getBanners = async () => {
     setLoading(true);
     const res = await getAllBanner();
-    console.log("res", res);
+    // console.log("res", res);
     if (res.code === 200) {
       setBanners(res.data.banners.reverse());
       setLoading(false);
     }
   };
 
-  console.log("banners", banners);
+  // console.log("banners", banners);
 
   const closeModal = () => {
     setModalOpen(false);

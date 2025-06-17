@@ -29,8 +29,6 @@ const CarDetail = () => {
         res.data.showcases.filter((cars) => cars.car_brand === tab)
       );
     }
-
-    // console.log(res);
   };
 
   const brandFilter = (tab) => {

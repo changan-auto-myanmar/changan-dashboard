@@ -28,9 +28,9 @@ const NewAndEvent = () => {
     if (res.code === 200) {
       setLoading(false);
     }
-    // console.log(res);
-    setNews(res.data.CSR);
-    setFilterNew(res.data.CSR);
+    // console.log(res.data.csrContents);
+    setNews(res.data.csrContents);
+    setFilterNew(res.data.csrContents);
   };
 
   const deleteNewEvent = async () => {
@@ -83,8 +83,8 @@ const NewAndEvent = () => {
             to="/home/new/form"
             className="flex items-center bg-primary text-white px-4 py-3 rounded-lg active:scale-95"
           >
-            <MdDriveFolderUpload className="mr-2" size={20} />
-            <span className="tabs-btn">Upload Content</span>
+            <MdDriveFolderUpload className="mr-0 lg:mr-2" size={20} />
+            <span className="tabs-btn hidden lg:block">Upload Content</span>
           </Link>
         </div>
 
@@ -104,6 +104,7 @@ const NewAndEvent = () => {
                 <div className="grid gril-cols-1 lg:grid-cols-2 gap-10 my-5 pb-[200px]">
                   {filterNew.length > 0 &&
                     filterNew.map((newdata, index) => (
+                      // console.log("newdata", newdata),
                       <div
                         className="w-full h-auto overflow-hidden cursor-pointer"
                         key={index}
@@ -130,9 +131,7 @@ const NewAndEvent = () => {
                             </div>
                           </div>
                           <img
-                            src={`${import.meta.env.VITE_API_URL}api/v1/${
-                              newdata?.images[0]?.filepath
-                            }`}
+                            src={`${newdata?.csrImages[0]?.url}`}
                             alt="img"
                             className="w-full h-72 object-cover"
                           />

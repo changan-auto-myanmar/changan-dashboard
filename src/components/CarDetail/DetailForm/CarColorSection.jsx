@@ -31,16 +31,15 @@ function CarColorSection() {
 
   const carDetailUpload = async () => {
     const formData = new FormData();
-    const colors = carColorData.map((item) => ({
-      color_name: item.colorName,
-    }));
+    const colors = carColorData.map((item) => item.colorName);
+    // console.log("colors", colors);
 
     formData.append("car_brand", carData.car_brand);
     formData.append("car_name", carData.car_name);
     formData.append("car_slogan", carData.car_slogan);
     formData.append("mockup", carData.mockup);
     formData.append("car_banner", carData.car_banner);
-    formData.append("car_porche", carData.car_porche);
+    formData.append("car_brochure", carData.car_porche);
     carData?.car_exterior.forEach((item) => {
       formData.append("car_exterior", item);
     });
@@ -50,13 +49,13 @@ function CarColorSection() {
     carData?.gallery.forEach((item) => {
       formData.append("gallery", item);
     });
-    formData.append("car_color", JSON.stringify(colors));
-    carColorData.forEach((item, index) => {
-      formData.append(`car_color[${index}].car_image`, item.colorImage);
-      formData.append(`car_color[${index}].car_color`, item.carColorImage);
+    formData.append("color_names", JSON.stringify(colors));
+    carColorData.forEach((item) => {
+      formData.append(`car_color_images`, item.carColorImage);
+      formData.append(`car_color_swatches`, item.colorImage);
     });
 
-    // console.log("formData", formData.values);
+    // console.log("formData", formData);
 
     const res = await uploadcarDetail(formData);
     // console.log("res", res);

@@ -1,14 +1,12 @@
 import { File } from "lucide-react";
 import { useState } from "react";
-import { MdDriveFolderUpload } from "react-icons/md";
 import EditcarDetail from "../../../api/cardetail/EditcarDetail";
 // import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const brands = ["CHANGAN", "DEEPAL", "KAICHEN"];
 
 function CarModelSectoin({ id, carData }) {
-  // console.log("CarModelSectoinData", carData);
-  // const carData = useSelector(selectCarData);
+  // console.log("carData", carData);
 
   const [car_brand, setSelectedBrand] = useState(null);
   const [car_name, setCarName] = useState(null);
@@ -127,9 +125,7 @@ function CarModelSectoin({ id, carData }) {
         {car_banner === null && carData[0]?.car_banner && (
           <div className="mt-4">
             <img
-              src={`${import.meta.env.VITE_API_URL}api/v1/${
-                carData[0]?.car_banner.filepath
-              }`}
+              src={`${carData[0]?.car_banner?.url}`}
               alt="Mockup"
               className="w-full h-64 object-cover"
             />
@@ -166,9 +162,7 @@ function CarModelSectoin({ id, carData }) {
               </div>
               <div className="relative my-2">
                 <img
-                  src={`${import.meta.env.VITE_API_URL}api/v1/${
-                    carData[0]?.mockup.filepath
-                  }`} // Placeholder image for demonstration; replace with your image URL
+                  src={`${carData[0]?.mockup?.url}`} // Placeholder image for demonstration; replace with your image URL
                   alt="Car Mockup"
                   className="w-full h-48 object-cover rounded-lg"
                 />
@@ -241,12 +235,7 @@ function CarModelSectoin({ id, carData }) {
                 <div
                   className="flex py-5 mx-10 px-10 bg-gray-100 rounded-md w-full justify-center items-center cursor-pointer"
                   onClick={() => {
-                    window.open(
-                      `${import.meta.env.VITE_API_URL}api/v1/${
-                        carData[0]?.car_porche?.filepath
-                      }`,
-                      "_blank"
-                    );
+                    window.open(`${carData[0]?.car_porche?.url}`, "_blank");
                   }}
                 >
                   <File size={50} className="mr-20" />

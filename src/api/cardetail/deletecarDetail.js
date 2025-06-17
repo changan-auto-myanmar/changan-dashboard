@@ -5,7 +5,7 @@ const deleteCarDetail = async (id) => {
   //   console.log("data", data);
   const toastId = toast.loading("Deleteing...");
   try {
-    const response = await axios.delete(`api/v1/showcase/${id}`);
+    const response = await axios.delete(`api/v1/changan-showcase/${id}`);
     toast.success("Delete successfully!", {
       id: toastId,
       autoClose: 500, // Auto-close the toast after 5 seconds

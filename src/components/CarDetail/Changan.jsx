@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 function Changan({ data, loading, activeTab, sentdeteleId }) {
   const navigate = useNavigate();
-
   const handleClick = (id) => {
     sentdeteleId(id); // Call the function passed from the parent
   };
@@ -31,7 +30,7 @@ function Changan({ data, loading, activeTab, sentdeteleId }) {
           )}
           {data.length > 0 && (
             <div className="overflow-y-auto mt-2 h-screen">
-              <div className="grid grid-cols-2 gap-10 my-5 pb-[200px]">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-5 pb-[200px]">
                 {data.map((image, index) => (
                   <div
                     className="w-full h-auto rounded-lg overflow-hidden cursor-pointer bg-gray-100"
@@ -60,14 +59,12 @@ function Changan({ data, loading, activeTab, sentdeteleId }) {
                         </button>
                       </div>
                       <img
-                        src={`${import.meta.env.VITE_API_URL}api/v1/${
-                          image?.car_banner.filepath
-                        }`}
+                        src={`${image?.mockup?.url}`}
                         alt="img"
                         className="w-full h-72 object-cover"
                       />
                     </div>
-                    <p className="text-[16px] font-semibold py-2">
+                    <p className="text-[16px] font-semibold py-2 ps-2">
                       {image.car_name}
                     </p>
                   </div>
