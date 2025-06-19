@@ -82,7 +82,7 @@ function CarColorSection() {
           </button>
         </div>
       </div>
-      <div className="flex space-x-4 mt-5">
+      <div className="flex flex-wrap gap-5 mt-5">
         {carColorData.length > 0 &&
           carColorData.map((carColor, index) => {
             return (
@@ -141,7 +141,9 @@ function CarColorSection() {
         <div className="mx-auto mt-5 p-6 w-1/2 rounded-lg box-dash">
           {colorImage == null && (
             <div className="flex flex-col items-center justify-center h-full gap-4">
-              <h3 className="text-[16px] font-semibold">Select Color Images</h3>
+              <h3 className="text-[16px] font-semibold">
+                Select Car Color Mockup
+              </h3>
               <div className="flex flex-col items-center justify-center">
                 <label htmlFor="mockup-upload" className="cursor-pointer">
                   <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
@@ -201,7 +203,7 @@ function CarColorSection() {
         <div className="mx-auto mt-5 p-6 w-1/2 rounded-lg box-dash">
           {carColorImage == null && (
             <div className="flex flex-col items-center justify-center h-full gap-4">
-              <h3 className="text-[16px] font-semibold">Select Color Images</h3>
+              <h3 className="text-[16px] font-semibold">Select Color Image</h3>
               <div className="flex flex-col items-center justify-center">
                 <label htmlFor="car-upload" className="cursor-pointer">
                   <span className="bg-white flex items-center text-[12px] justify-center px-4 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-md hover:bg-blue-500 hover:text-white transition duration-300">
@@ -226,7 +228,7 @@ function CarColorSection() {
             <div>
               <div className="flex items-center justify-between">
                 <h3 className="text-[16px] font-semibold mb-4">
-                  Select Car Mock Up Image
+                  Select Car Color Image
                 </h3>
                 <div className="flex flex-col items-center">
                   <label htmlFor="mockup-upload" className="cursor-pointer">

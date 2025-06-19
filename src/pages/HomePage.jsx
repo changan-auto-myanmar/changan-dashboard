@@ -20,7 +20,9 @@ import BrandOverviewDetail from "../components/ImageVedio/BrandOverviewDetail";
 function HomePage() {
   return (
     <div className="flex bg-gray-100 min-h-screen ">
-      <Sidebar />
+      <div className="">
+        <Sidebar />
+      </div>
       <div className="flex-1 pb-20">
         <Routes>
           <Route path="/image-vedio" element={<ImageVedio />} />
