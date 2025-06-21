@@ -21,7 +21,7 @@ function ContactForm() {
       // console.log(response.data);
       setMails(response.data.mailbox);
     } catch (error) {
-      // console.error(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -99,74 +99,80 @@ function ContactForm() {
           </div>
         )}
 
-        {mails.length !== 0 && (
-          <table className="w-full">
-            <thead className="text-left">
-              <tr className="bg-primary text-white text-left ">
-                <th className="py-4 px-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2"
-                    onChange={selectAllMail}
-                    checked={
-                      mails.length > 0 && selectedMails.length === mails.length
-                    } // Check if all are selected
-                  />
-                </th>
-                <th className="py-4 px-4">No</th>
-                <th className="py-4 px-4">Date</th>
-                <th className="py-4 px-4">Name</th>
-                <th className="py-4 px-4">Subject</th>
-                {/* <th className="py-4 px-4">Description</th> */}
-                <th className="py-4 px-4">Phone Num</th>
-                <th className="py-4 px-4">Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              {mails.map((mail, index) => (
-                <tr
-                  className="bg-white"
-                  key={mail._id} // Use _id for the key
-                  onClick={() => {
-                    setShow(true);
-                    setData(mail);
-                  }}
-                >
-                  <td className="py-2 px-4">
+        <div className="h-[calc(92vh-200px)] overflow-y-auto">
+          {mails.length !== 0 && (
+            <table className="w-full">
+              <thead
+                className="text-left"
+                style={{ position: "sticky", top: 0 }}
+              >
+                <tr className="bg-primary text-white text-left ">
+                  <th className="py-4 px-4">
                     <input
                       type="checkbox"
-                      className="mail-checkbox"
-                      checked={selectedMails.includes(mail._id)} // Check if mail _ID is selected
-                      onChange={() => {
-                        if (selectedMails.includes(mail._id)) {
-                          // If already selected, remove from the selection
-                          setSelectedMails(
-                            selectedMails.filter((id) => id !== mail._id)
-                          );
-                        } else {
-                          // If not selected, add to selection
-                          setSelectedMails([...selectedMails, mail._id]);
-                        }
-                      }}
-                      onClick={(e) => e.stopPropagation()} // Prevent row click
+                      className="mr-2"
+                      onChange={selectAllMail}
+                      checked={
+                        mails.length > 0 &&
+                        selectedMails.length === mails.length
+                      } // Check if all are selected
                     />
-                  </td>
-                  <td className="py-2 px-4">{index + 1}</td>
-                  <td className="py-2 px-4">
-                    <DateFormatter dateString={mail.sentAt} />
-                  </td>
-                  <td className="py-2 px-4">{mail.name}</td>
-                  <td className="py-2 px-4">{mail.subject}</td>
-                  {/* <td className="py-2 px-4 w-48 overflow-hidden whitespace-nowrap text-ellipsis">
+                  </th>
+                  <th className="py-4 px-4">No</th>
+                  <th className="py-4 px-4">Date</th>
+                  <th className="py-4 px-4">Name</th>
+                  <th className="py-4 px-4">Subject</th>
+                  {/* <th className="py-4 px-4">Description</th> */}
+                  <th className="py-4 px-4">Phone Num</th>
+                  <th className="py-4 px-4">Email</th>
+                </tr>
+              </thead>
+              <tbody className="bg-red-50">
+                {mails.map((mail, index) => (
+                  <tr
+                    className="bg-white"
+                    key={mail._id} // Use _id for the key
+                    onClick={() => {
+                      setShow(true);
+                      setData(mail);
+                    }}
+                  >
+                    <td className="py-2 px-4">
+                      <input
+                        type="checkbox"
+                        className="mail-checkbox"
+                        checked={selectedMails.includes(mail._id)} // Check if mail _ID is selected
+                        onChange={() => {
+                          if (selectedMails.includes(mail._id)) {
+                            // If already selected, remove from the selection
+                            setSelectedMails(
+                              selectedMails.filter((id) => id !== mail._id)
+                            );
+                          } else {
+                            // If not selected, add to selection
+                            setSelectedMails([...selectedMails, mail._id]);
+                          }
+                        }}
+                        onClick={(e) => e.stopPropagation()} // Prevent row click
+                      />
+                    </td>
+                    <td className="py-2 px-4">{index + 1}</td>
+                    <td className="py-2 px-4">
+                      <DateFormatter dateString={mail.sentAt} />
+                    </td>
+                    <td className="py-2 px-4">{mail.name}</td>
+                    <td className="py-2 px-4">{mail.subject}</td>
+                    {/* <td className="py-2 px-4 w-48 overflow-hidden whitespace-nowrap text-ellipsis">
                     {mail.description}
                   </td> */}
-                  <td className="py-2 px-4">{mail.phone}</td>
-                  <td className="py-2 px-4">{mail.email}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+                    <td className="py-2 px-4">{mail.phone}</td>
+                    <td className="py-2 px-4">{mail.email}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
       <ConfirmationModal
         isOpen={isConfirmDeleteOpen}

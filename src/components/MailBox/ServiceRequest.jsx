@@ -92,60 +92,66 @@ function ServiceRequest() {
         )}
 
         {mails.length > 0 && (
-          <table className="w-full">
-            <thead className="text-left">
-              <tr className="bg-primary text-white text-left ">
-                <th className="py-4 px-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2"
-                    onChange={selectAllMails}
-                    checked={
-                      mails.length > 0 && selectedMails.length === mails.length
-                    } // Check if all are selected
-                  />
-                </th>
-                <th className="py-4 px-4 font-medium">No</th>
-                <th className="py-4 px-4 font-medium">Date</th>
-                <th className="py-4 px-4 font-medium">Name</th>
-                <th className="py-4 px-4 font-medium">Car Model</th>
-                <th className="py-4 px-4 font-medium">Phone Num</th>
-                <th className="py-4 px-4 font-medium">Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              {mails.map((mail, index) => (
-                <tr className="bg-white" key={mail._id}>
-                  {/* Use _id for the key */}
-                  <td className="py-2 px-4">
+          <div className="h-[calc(92vh-200px)] overflow-y-auto">
+            <table className="w-full">
+              <thead
+                className="text-left"
+                style={{ position: "sticky", top: 0 }}
+              >
+                <tr className="bg-primary text-white text-left ">
+                  <th className="py-4 px-4">
                     <input
                       type="checkbox"
                       className="mr-2"
-                      checked={selectedMails.includes(mail._id)} // Check if the mail _ID is selected
-                      onChange={() => {
-                        if (selectedMails.includes(mail._id)) {
-                          // If already selected, remove from the selection
-                          setSelectedMails(
-                            selectedMails.filter((id) => id !== mail._id)
-                          );
-                        } else {
-                          // If not selected, add to selection
-                          setSelectedMails([...selectedMails, mail._id]);
-                        }
-                      }}
-                      onClick={(e) => e.stopPropagation()} // Prevent row click propagation
+                      onChange={selectAllMails}
+                      checked={
+                        mails.length > 0 &&
+                        selectedMails.length === mails.length
+                      } // Check if all are selected
                     />
-                  </td>
-                  <td className="py-2 px-4">{index + 1}</td>
-                  <td className="py-2 px-4">{mail.date}</td>
-                  <td className="py-2 px-4">{mail.name}</td>
-                  <td className="py-2 px-4">{mail.car_model}</td>
-                  <td className="py-2 px-4">{mail.phone}</td>
-                  <td className="py-2 px-4">{mail.email}</td>
+                  </th>
+                  <th className="py-4 px-4 font-medium">No</th>
+                  <th className="py-4 px-4 font-medium">Date</th>
+                  <th className="py-4 px-4 font-medium">Name</th>
+                  <th className="py-4 px-4 font-medium">Car Model</th>
+                  <th className="py-4 px-4 font-medium">Phone Num</th>
+                  <th className="py-4 px-4 font-medium">Email</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {mails.map((mail, index) => (
+                  <tr key={mail._id}>
+                    {/* Use _id for the key */}
+                    <td className="py-2 px-4">
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        checked={selectedMails.includes(mail._id)} // Check if the mail _ID is selected
+                        onChange={() => {
+                          if (selectedMails.includes(mail._id)) {
+                            // If already selected, remove from the selection
+                            setSelectedMails(
+                              selectedMails.filter((id) => id !== mail._id)
+                            );
+                          } else {
+                            // If not selected, add to selection
+                            setSelectedMails([...selectedMails, mail._id]);
+                          }
+                        }}
+                        onClick={(e) => e.stopPropagation()} // Prevent row click propagation
+                      />
+                    </td>
+                    <td className="py-2 px-4">{index + 1}</td>
+                    <td className="py-2 px-4">{mail.date}</td>
+                    <td className="py-2 px-4">{mail.name}</td>
+                    <td className="py-2 px-4">{mail.car_model}</td>
+                    <td className="py-2 px-4">{mail.phone}</td>
+                    <td className="py-2 px-4">{mail.email}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
       <ConfirmationModal

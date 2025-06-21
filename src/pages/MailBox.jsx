@@ -1,7 +1,7 @@
 // import React from "react";
 // import { Trash2Icon } from "lucide-react";
 import { useState } from "react";
-import ServiceRequestCopy from "../components/MailBox/ServiceRequest copy";
+import ServiceRequest from "../components/MailBox/ServiceRequest";
 import ContactForm from "../components/MailBox/ContactForm";
 
 const tabs = ["Service Form", "Contact Form"];
@@ -30,7 +30,7 @@ function MailBox() {
           </div>
         </div>
 
-        <div>{activeTab === tabs[0] && <ServiceRequestCopy />}</div>
+        <div>{activeTab === tabs[0] && <ServiceRequest />}</div>
         <div>{activeTab === tabs[1] && <ContactForm />}</div>
       </div>
     </div>
