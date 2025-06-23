@@ -89,7 +89,7 @@ function ContactForm() {
         )}
 
         {show && (
-          <div className="absolute w-full h-screen backdrop-opacity-10 backdrop-invert bg-white/30 top-0 left-0 flex justify-center items-center">
+          <div className="absolute z-50 w-full h-screen backdrop-opacity-10 backdrop-invert bg-white/30 top-0 left-0 flex justify-center items-center">
             <MailBoxModel data={data} onClose={() => setShow(false)} />
           </div>
         )}
