@@ -192,7 +192,7 @@ function CarImageSection({ gotonext }) {
         <div className="mt-5">
           <div className="flex items-center">
             <p className="banner-header mr-2">Gallery</p>
-            <p>{gallery.length}/3</p>
+            <p>{gallery.length}/8</p>
           </div>
           <div className="mx-auto mt-5 p-6 rounded-lg box-dash ">
             <div className="flex flex-col h-full justify-center">

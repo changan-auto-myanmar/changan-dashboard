@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import handleLogin from "../api/handleLogin";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -51,16 +52,29 @@ const Login = () => {
           >
             Password
           </label>
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type={showPassword ? "text" : "password"}
-            size="lg"
-            id="password"
-            required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
-            placeholder="********"
-          />
+          <div className="relative">
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type={showPassword ? "text" : "password"}
+              size="lg"
+              id="password"
+              required
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-500"
+              placeholder="********"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2"
+            >
+              {showPassword ? (
+                <EyeOffIcon size={20} className="text-gray-500" />
+              ) : (
+                <EyeIcon size={20} className="text-gray-500" />
+              )}
+            </button>
+          </div>
         </div>
         <button
           type="submit"
