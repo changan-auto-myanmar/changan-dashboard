@@ -35,7 +35,7 @@ const BrandOverviewForm = () => {
     const formData = new FormData();
     formData.append("car_brand", car_brand);
     car_exterier.forEach((image) => {
-      formData.append("images", image);
+      formData.append("brandImageUrls", image);
     });
 
     const res = await uploadBrandOverview(formData);
