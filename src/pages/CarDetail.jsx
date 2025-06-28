@@ -9,7 +9,7 @@ import "swiper/css";
 import deleteCarDetail from "../api/cardetail/deletecarDetail";
 import ConfirmationModal from "../components/ConfirmationModal";
 
-const tabs = ["CHANGAN", "DEEPAL", "KAICHEN"];
+const tabs = ["CHANGAN", "DEEPAL", "KAICHENG"];
 
 // Sample dummy image URLs
 const CarDetail = () => {
