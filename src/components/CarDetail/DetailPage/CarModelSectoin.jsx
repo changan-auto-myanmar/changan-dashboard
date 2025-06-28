@@ -3,7 +3,7 @@ import { useState } from "react";
 import EditcarDetail from "../../../api/cardetail/EditcarDetail";
 // import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const brands = ["CHANGAN", "DEEPAL", "KAICHEN"];
+const brands = ["CHANGAN", "DEEPAL", "KAICHENG"];
 
 function CarModelSectoin({ id, carData }) {
   // console.log("carData", carData);
