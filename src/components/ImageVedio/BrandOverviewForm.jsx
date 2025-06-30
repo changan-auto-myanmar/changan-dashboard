@@ -17,8 +17,8 @@ const BrandOverviewForm = () => {
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
-    if (car_exterier.length + files.length > 5) {
-      toast.warning("You can only upload a maximum of 5 images.");
+    if (car_exterier.length + files.length > 8) {
+      toast.warning("You can only upload a maximum of 8 images.");
       return;
     }
     setExterier((prevImages) => [...prevImages, ...files]);

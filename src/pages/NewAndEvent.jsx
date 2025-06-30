@@ -57,7 +57,7 @@ const NewAndEvent = () => {
 
   return (
     <div className="mt-5">
-      <span className="header my-4">New And Event</span>
+      <span className="header my-4">News And Events</span>
 
       <div className="mt-3 pe-5 pt-3">
         <div className="flex justify-between mb-2">
