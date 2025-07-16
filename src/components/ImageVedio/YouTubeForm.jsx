@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { AiOutlineUpload } from "react-icons/ai";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdDriveFolderUpload } from "react-icons/md";
-import uploadBanners from "../../api/banner/uploadBanner";
 import uploadYouTube from "../../api/banner/uploadYouTube";
 
 function YoutubeForm({ onclose }) {
@@ -23,7 +21,7 @@ function YoutubeForm({ onclose }) {
   return (
     <div>
       <div className="fixed z-10 inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-white rounded-lg p-6 w-1/3">
+        <div className="bg-white rounded-lg p-6 w-[90%] lg:w-1/3">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold mb-4">Upload YouTube Link</h2>
           </div>

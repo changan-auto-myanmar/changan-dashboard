@@ -75,7 +75,7 @@ const Sidebar = () => {
                 }
               >
                 <Newspaper className="text-2xl sm:mx-2" />
-                <span className="hidden lg:block">New & Event</span>
+                <span className="hidden lg:block">News & Events</span>
                 <span className="hidden sm:block lg:hidden">New</span>
               </NavLink>
             </li>

@@ -81,8 +81,8 @@ function Home() {
           }`}
           disabled={banners.length >= 5}
         >
-          <MdDriveFolderUpload className="mr-2" size={20} />
-          <span className="tabs-btn">Upload Image</span>
+          <MdDriveFolderUpload className="mr-0 lg:mr-2 " size={20} />
+          <span className="tabs-btn hidden lg:block">Upload Image</span>
         </button>
       </div>
       {loading ? (
