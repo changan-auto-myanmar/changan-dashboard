@@ -6,7 +6,20 @@ import { setCarData, selectCarData } from "./../../../redux/carSlice";
 import { toast } from "sonner";
 // import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const brands = ["CHANGAN", "DEEPAL", "KAICHENG"];
+const brands = [
+  {
+    name: "CHANGAN",
+    value: "CHANGAN",
+  },
+  {
+    name: "DEEPAL",
+    value: "DEEPAL",
+  },
+  {
+    name: "KAICENE",
+    value: "KAICHENG",
+  },
+];
 
 function CarModelSectoin({ gotonext }) {
   const dispatch = useDispatch();
@@ -34,7 +47,7 @@ function CarModelSectoin({ gotonext }) {
     toast.info("Car Data Saved Successfully");
     gotonext();
 
-    // console.log("data", data);
+    console.log("data", data);
   };
 
   return (
@@ -53,16 +66,16 @@ function CarModelSectoin({ gotonext }) {
       <div>
         <div className="flex space-x-4 mt-5">
           {brands.map((brand) => (
-            <div key={brand} className="flex items-center space-x-2">
+            <div key={brand.value} className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 checked={
-                  car_brand ? car_brand === brand : carData.car_brand === brand
+                  car_brand ? car_brand === brand.value : carData.car_brand === brand.value
                 }
                 className="checkbox"
-                onChange={() => setSelectedBrand(brand)}
+                onChange={() => setSelectedBrand(brand.value)}
               />
-              <label className="font-medium">{brand}</label>
+              <label className="font-medium">{brand.name}</label>
             </div>
           ))}
         </div>

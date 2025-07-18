@@ -9,12 +9,25 @@ import "swiper/css";
 import deleteCarDetail from "../api/cardetail/deletecarDetail";
 import ConfirmationModal from "../components/ConfirmationModal";
 
-const tabs = ["CHANGAN", "DEEPAL", "KAICHENG"];
+const tabs = [
+  {
+    name: "CHANGAN",
+    value: "CHANGAN",
+  },
+  {
+    name: "DEEPAL",
+    value: "DEEPAL",
+  },
+  {
+    name: "KAICENE",
+    value: "KAICHENG",
+  },
+];
 
-// Sample dummy image URLs
+// Sample dummy image URLss
 const CarDetail = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [activeTab, setActiveTab] = useState(tabs[0].value);
   const [CarDetailData, setCarDetailData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState(null);
@@ -26,13 +39,13 @@ const CarDetail = () => {
     if (res.code === 200) {
       setLoading(false);
       setCarDetailData(
-        res.data.showcases.filter((cars) => cars.car_brand === tab)
+        res.data.showcases.filter((cars) => cars.car_brand === tab.value)
       );
     }
   };
 
   const brandFilter = (tab) => {
-    setActiveTab(tab);
+    setActiveTab(tab.value);
     getCarData(tab);
   };
 
@@ -47,7 +60,7 @@ const CarDetail = () => {
   };
 
   useEffect(() => {
-    getCarData("CHANGAN");
+    getCarData(tabs[0]);
   }, []);
 
   return (
@@ -60,13 +73,13 @@ const CarDetail = () => {
           <div className="flex space-x-4 mb-4">
             {tabs.map((tab) => (
               <button
-                key={tab}
+                key={tab.value}
                 className={`py-1 px-4 rounded-2xl text-[14px] font-semibold ${
-                  activeTab === tab ? "bg-secondary text-primary" : "text-black"
+                  activeTab === tab.value ? "bg-secondary text-primary" : "text-black"
                 }`}
                 onClick={() => brandFilter(tab)}
               >
-                {tab}
+                {tab.name}
               </button>
             ))}
           </div>

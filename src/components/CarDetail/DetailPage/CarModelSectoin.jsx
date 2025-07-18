@@ -3,7 +3,20 @@ import { useState } from "react";
 import EditcarDetail from "../../../api/cardetail/EditcarDetail";
 // import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const brands = ["CHANGAN", "DEEPAL", "KAICHENG"];
+const brands = [
+  {
+  name: "CHANGAN",
+  value: "CHANGAN",
+  },
+  {
+    name: "DEEPAL",
+    value: "DEEPAL",
+  },
+  {
+    name: "KAICENE",
+    value: "KAICHENG",
+  },
+];
 
 function CarModelSectoin({ id, carData }) {
   // console.log("carData", carData);
@@ -46,19 +59,19 @@ function CarModelSectoin({ id, carData }) {
       <div>
         <div className="flex space-x-4 mt-5">
           {brands.map((brand) => (
-            <div key={brand} className="flex items-center space-x-2">
+            <div key={brand.value} className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 checked={
                   car_brand
-                    ? car_brand === brand
-                    : carData[0].car_brand === brand
+                    ? car_brand === brand.value
+                    : carData[0].car_brand === brand.value
                 }
                 className="checkbox"
                 // onChange={() => setSelectedBrand(brand)}
                 readOnly
               />
-              <label className="font-medium">{brand}</label>
+              <label className="font-medium">{brand.name}</label>
             </div>
           ))}
         </div>
