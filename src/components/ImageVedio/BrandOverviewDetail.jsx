@@ -13,7 +13,20 @@ import deleteBrandOverview from "../../api/brandoverview/deletebrandOverview";
 import ConfirmationModal from "../ConfirmationModal";
 // import getBrandOverview from "../../api/brandoverview/getBrandOverview";
 
-const brands = ["CHANGAN", "DEEPAL", "KAICHENG"];
+const brands = [
+  {
+    name: "CHANGAN",
+    value: "CHANGAN",
+  },
+  {
+    name: "DEEPAL",
+    value: "DEEPAL",
+  },
+  {
+    name: "KAICENE",
+    value: "KAICHENG",
+  },
+];
 
 const BrandOverviewDetail = () => {
   const { id } = useParams();
@@ -114,12 +127,12 @@ const BrandOverviewDetail = () => {
               <div key={brand} className="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  checked={car_brand === brand}
+                  checked={car_brand === brand.value}
                   className="checkbox"
                   // onChange={() => setSelectedBrand(brand)}
                   readOnly
                 />
-                <label className="font-medium">{brand}</label>
+                <label className="font-medium">{brand.name}</label>
               </div>
             ))}
           </div>

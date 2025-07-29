@@ -51,7 +51,7 @@ function Youtube() {
     <div className="p-4 bg-white rounded-lg">
       <div className="flex flex-col md:flex-row justify-between">
         <div className="">
-          <span className="banner-header mt-5">Youtube Vedio</span>
+          <span className="banner-header mt-5">Vedios</span>
           <span className="font-semibold text-[16px] ms-5">
             {youtube.length}/<span className="text-gray-500">4</span>
           </span>

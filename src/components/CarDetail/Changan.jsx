@@ -3,6 +3,7 @@ import Loading from "../Loading";
 import { useNavigate } from "react-router-dom";
 
 function Changan({ data, loading, activeTab, sentdeteleId }) {
+  // console.log(activeTab);
   const navigate = useNavigate();
   const handleClick = (id) => {
     sentdeteleId(id); // Call the function passed from the parent
@@ -11,7 +12,9 @@ function Changan({ data, loading, activeTab, sentdeteleId }) {
   return (
     <div className="p-4 bg-white rounded-lg">
       <div className="flex items-center">
-        <p className="banner-header">{activeTab}</p>
+        <p className="banner-header">
+          {activeTab === "KAICHENG" ? "KAICENE" : activeTab}
+        </p>
         <span className="font-semibold text-[16px] ms-5">
           {data.length}/<span className="text-gray-500">8</span>
         </span>

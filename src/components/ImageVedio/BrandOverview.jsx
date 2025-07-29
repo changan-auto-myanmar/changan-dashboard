@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
-import { MdDriveFolderUpload, MdOutlineEdit } from "react-icons/md";
+import {
+  MdDriveFolderUpload,
+  MdOutlineDelete,
+  MdOutlineEdit,
+} from "react-icons/md";
 import { Link } from "react-router-dom";
 // api
 import getBrandOverview from "../../api/brandoverview/getBrandOverview";
 // components
 import Loading from "../Loading";
+import { Trash2Icon } from "lucide-react";
+import deleteBrand from "../../api/brandoverview/deletebrand";
+import ConfirmationModal from "../ConfirmationModal";
 
 function BrandOverview() {
   const [loading, setLoading] = useState(true);
   const [brands, setBrands] = useState([]);
+  const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [brandToDelete, setBrandToDelete] = useState(null);
 
   const getAllBrandOverview = async () => {
     const res = await getBrandOverview();
@@ -19,7 +28,13 @@ function BrandOverview() {
     }
   };
 
-  // console.log("brands", brands);
+  const handleDelete = async () => {
+    const res = await deleteBrand(brandToDelete);
+    if (res.code === 200) {
+      setConfirmDeleteOpen(false);
+      getAllBrandOverview();
+    }
+  };
 
   useEffect(() => {
     getAllBrandOverview();
@@ -69,7 +84,7 @@ function BrandOverview() {
                       key={index}
                     >
                       <div className="relative">
-                        <div className="absolute top-0 right-0 p-2 z-10">
+                        <div className="absolute top-0 right-0 p-2 z-10 flex gap-2">
                           <Link
                             to={`overview/detail/${brand.car_brand}`}
                             className="py-3 px-3 rounded-2xl text-[14px] bg-secondary text-primary flex items-center font-semibold rounded-md hover:scale-105 active:scale-95"
@@ -77,6 +92,16 @@ function BrandOverview() {
                             <MdOutlineEdit className="mr-2" size={20} />
                             <span className="tabs-btn">Edit</span>
                           </Link>
+
+                          <button
+                            onClick={() => {
+                              setBrandToDelete(brand?.car_brand);
+                              setConfirmDeleteOpen(true);
+                            }}
+                            className="py-3 px-3 rounded-2xl text-[14px] bg-red-500 text-white flex items-center font-semibold rounded-md hover:scale-105 active:scale-95"
+                          >
+                            <Trash2Icon className="" size={20} />
+                          </button>
                         </div>
                         {brand.brandImageUrls.length > 0 && (
                           <img
@@ -87,7 +112,9 @@ function BrandOverview() {
                         )}
                       </div>
                       <p className="text-[16px] font-semibold pt-2">
-                        {brand?.car_brand}
+                        {brand?.car_brand === "KAICHENG"
+                          ? "KAICENE"
+                          : brand?.car_brand}
                       </p>
                     </div>
                   ))}
@@ -97,6 +124,14 @@ function BrandOverview() {
           </div>
         )}
       </div>
+
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onConfirm={handleDelete}
+        text="remove this brand?"
+        onCancel={() => setConfirmDeleteOpen(false)}
+      />
     </div>
   );
 }

@@ -8,7 +8,7 @@ import uploadBrandOverview from "../../api/brandoverview/uploadBrandOverview";
 import { toast } from "sonner";
 import "./../CarDetail/detailform.css";
 
-const brands = ["CHANGAN", "DEEPAL", "KAICHENG"];
+const brands = ["CHANGAN", "DEEPAL", "KAICENE"];
 
 const BrandOverviewForm = () => {
   const navigate = useNavigate();
@@ -33,14 +33,18 @@ const BrandOverviewForm = () => {
 
   const handleUpload = async () => {
     const formData = new FormData();
-    formData.append("car_brand", car_brand);
+    if (car_brand === "KAICENE") {
+      formData.append("car_brand", "KAICHENG");
+    } else {
+      formData.append("car_brand", car_brand);
+    }
     car_exterier.forEach((image) => {
       formData.append("brandImageUrls", image);
     });
 
     const res = await uploadBrandOverview(formData);
     // console.log("res", res);
-    if (res.code === 200) {
+    if (res.code === 201) {
       navigate("/home/image-vedio");
     }
   };
